@@ -3,7 +3,7 @@
   associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <enumeration id="1" language="java" name="simulation.Location" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Location.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="78" y="290"/>    
+    <position height="-1" width="-1" x="721" y="244"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -12,7 +12,7 @@
   </enumeration>  
   <class id="2" language="java" name="simulation.WorkOrder" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/WorkOrder.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="360" y="250"/>    
+    <position height="-1" width="-1" x="421" y="257"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -39,7 +39,7 @@
   </enumeration>  
   <class id="5" language="java" name="simulation.Current" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Current.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="521" y="55"/>    
+    <position height="-1" width="-1" x="288" y="43"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -48,7 +48,7 @@
   </class>  
   <enumeration id="6" language="java" name="simulation.Types" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Types.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="577" y="391"/>    
+    <position height="-1" width="-1" x="703" y="372"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -57,26 +57,38 @@
   </enumeration>  
   <association id="7">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="8" name="Status"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
+      <attribute id="8" name="Status">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="9" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="10">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="11" name="Location"/>      
-      <multiplicity id="12" minimum="0" maximum="1"/>    
+      <attribute id="11" name="Type">        
+        <position height="0" width="0" x="126" y="-19"/>      
+      </attribute>      
+      <multiplicity id="12" minimum="0" maximum="1">        
+        <position height="0" width="0" x="126" y="-19"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="13">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="14" name="Type"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
+      <attribute id="14" name="Location">        
+        <position height="0" width="0" x="643" y="-46"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="1">        
+        <position height="0" width="0" x="643" y="-46"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
