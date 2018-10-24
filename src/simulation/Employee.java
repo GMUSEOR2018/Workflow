@@ -1,14 +1,14 @@
 package simulation;
 // Employee as Parent class
-class Employee {
-	private int ID;
-	private int supervisorID;
-	private String name;
-	private WorkOrder wo;
-	private Shift S;
+public class Employee {
+	protected int ID;
+	protected int supervisorID;
+	protected String name;
+	protected WorkOrder WO;
+	protected Shift Shift;
 	
-	private void Assign(WorkOrder WO) {
-		this.wo=WO;
+	public void Assign(WorkOrder WO) {
+		this.WO=WO;
 	}
 	
 }

@@ -1,5 +1,3 @@
 package simulation;
 //Enumeration for worker shifts
-enum Shift { Day, Night
-
-}
+public enum Shift { Day, Night }

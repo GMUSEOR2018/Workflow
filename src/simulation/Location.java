@@ -1,5 +1,5 @@
 package simulation;
 //Enumeration for work order location
-enum Location {NE, NW, SE
+public enum Location {NE, NW, SE
 
 }

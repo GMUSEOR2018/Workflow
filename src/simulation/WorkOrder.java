@@ -1,7 +1,7 @@
 package simulation;
 import java.util.*;
 
-class WorkOrder {
+public class WorkOrder {
 	private int ID;
 	private Types Type;
 	private Status Status;
@@ -11,11 +11,11 @@ class WorkOrder {
 	private Date Schedule;
 	private Date Finish;
 	//Constructor
-	private WorkOrder(int id, Types t, Location l,Date d ) {
+	public WorkOrder(int id, Types t, Location l,Date d ) {
 		this.ID=id;
 		this.Type=t;
 		this.Location=l;
-		this.Status= Status.APPR;//TODO: Initial with APPR.
+		this.Status= simulation.Status.APPR;//TODO: Initial with APPR.
 		this.plan=false;
 		this.Report=d; this.Schedule=null; this.Finish=null;
 	}
