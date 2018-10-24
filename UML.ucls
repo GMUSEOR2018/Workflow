@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <enumeration id="1" language="java" name="simulation.Location" project="GMUworkFlow" 
+    file="/GMUworkFlow/src/simulation/Location.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="78" width="135" x="89" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="2" language="java" name="simulation.WorkOrder" project="GMUworkFlow" 
+    file="/GMUworkFlow/src/simulation/WorkOrder.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="78" width="97" x="264" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="simulation.Main" project="GMUworkFlow" 
+    file="/GMUworkFlow/src/simulation/Main.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="124" x="401" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="4" language="java" name="simulation.Status" project="GMUworkFlow" 
+    file="/GMUworkFlow/src/simulation/Status.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="78" width="135" x="565" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="5" language="java" name="simulation.Current" project="GMUworkFlow" 
+    file="/GMUworkFlow/src/simulation/Current.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="78" width="97" x="740" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="6" language="java" name="simulation.Types" project="GMUworkFlow" 
+    file="/GMUworkFlow/src/simulation/Types.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="78" width="135" x="877" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
