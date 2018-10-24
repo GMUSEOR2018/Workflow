@@ -19,7 +19,7 @@ class WorkOrder {
 		this.plan=false;
 		this.Report=d; this.Schedule=null; this.Finish=null;
 	}
-	
+
 	private void addPlan() {
 		this.plan=true;
 	}
