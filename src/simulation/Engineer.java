@@ -8,11 +8,11 @@ public class Engineer extends Employee {
 		this.name=name;
 		this.Shift=Shift.Day;
 	}
-	public void Assign(WorkOrder WO) {
+	protected void Assign(WorkOrder WO) {
 		this.WO=WO;
 		makePlan();
 	}
-	private void makePlan() {
+	protected void makePlan() {
 		WO.setPlan();
 	}
 }

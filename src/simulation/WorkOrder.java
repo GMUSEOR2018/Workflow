@@ -15,7 +15,7 @@ public class WorkOrder {
 		this.ID=id;
 		this.Type=t;
 		this.Location=l;
-		this.Status= simulation.Status.APPR;//TODO: Initial with APPR.
+		this.Status= Status.APPR;//TODO: Initial with APPR.
 		this.plan=false;
 		this.Report=d; this.Schedule=null; this.Finish=null;
 	}
@@ -29,7 +29,7 @@ public class WorkOrder {
 	private void Finsih(Date F) {
 		this.Finish=F;
 	}
-	public void setPlan() {
+	protected void setPlan() {
 		this.plan=true;
 	}
 	//return order info

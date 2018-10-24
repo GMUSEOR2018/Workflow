@@ -7,7 +7,7 @@ public class Employee {
 	protected WorkOrder WO;
 	protected Shift Shift;
 	
-	public void Assign(WorkOrder WO) {
+	protected void Assign(WorkOrder WO) {
 		this.WO=WO;
 	}
 	
