@@ -19,10 +19,7 @@ public class WorkOrder {
 		this.plan=false;
 		this.Report=d; this.Schedule=null; this.Finish=null;
 	}
-
-	private void addPlan() {
-		this.plan=true;
-	}
+	
 	private void schedule(Date Status) {
 		this.Schedule=Status;
 	}
@@ -31,6 +28,9 @@ public class WorkOrder {
 	}
 	private void Finsih(Date F) {
 		this.Finish=F;
+	}
+	public void setPlan() {
+		this.plan=true;
 	}
 	//return order info
 	private int getID() {return this.ID;}
