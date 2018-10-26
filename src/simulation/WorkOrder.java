@@ -1,7 +1,7 @@
 package simulation;
 import java.util.*;
 
-public class WorkOrder {
+abstract class WorkOrder implements TestShut{
 	private int ID;
 	private Types Type;
 	private Status Status;
@@ -15,30 +15,31 @@ public class WorkOrder {
 		this.ID=id;
 		this.Type=t;
 		this.Location=l;
-		this.Status= Status.APPR;//TODO: Initial with APPR.
+		this.Status= simulation.Status.APPR;//TODO: Check if initial with APPR.
 		this.plan=false;
 		this.Report=d; this.Schedule=null; this.Finish=null;
 	}
 	
-	private void schedule(Date Status) {
+	protected void schedule(Date Status) {
 		this.Schedule=Status;
 	}
-	private void updateStatus(Status s) {
+	protected void updateStatus(Status s) {
 		this.Status=s;
 	}
-	private void Finsih(Date F) {
+	protected void Finsih(Date F) {
+		this.Status=simulation.Status.COMP; //update status after csae close
 		this.Finish=F;
 	}
 	protected void setPlan() {
 		this.plan=true;
 	}
 	//return order info
-	private int getID() {return this.ID;}
-	private Types getTypes() {return this.Type;}
-	private Location getLoation() {return this.Location;}
-	private Status getStatus() {return this.Status;}
-	private boolean isPlan() {return this.plan;}
-	private Date getReport() {return this.Report;}
-	private Date getSchedule() {return this.Schedule;}
-	private Date getFinish() {return this.Finish;}
+	protected int getID() {return this.ID;}
+	protected Types getTypes() {return this.Type;}
+	protected Location getLoation() {return this.Location;}
+	protected Status getStatus() {return this.Status;}
+	protected boolean isPlan() {return this.plan;}
+	protected Date getReport() {return this.Report;}
+	protected Date getSchedule() {return this.Schedule;}
+	protected Date getFinish() {return this.Finish;}
 }
