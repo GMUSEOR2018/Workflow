@@ -4,7 +4,7 @@
   <enumeration id="1" language="java" name="simulation.Location" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Location.java" binary="false" corner="BOTTOM_LEFT">    
     <position height="-1" width="-1" x="728" y="62"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -13,7 +13,7 @@
   <class id="2" language="java" name="simulation.WorkOrder" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/WorkOrder.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="603" y="370"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -22,7 +22,7 @@
   <class id="3" language="java" name="simulation.Main" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Main.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="106" y="48"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -31,7 +31,7 @@
   <enumeration id="4" language="java" name="simulation.Status" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Status.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="872" y="170"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -40,7 +40,7 @@
   <class id="5" language="java" name="simulation.Current" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Current.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="288" y="43"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -49,7 +49,7 @@
   <enumeration id="6" language="java" name="simulation.Types" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Types.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="533" y="139"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -58,32 +58,27 @@
   <class id="7" language="java" name="simulation.Engineer" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Engineer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="96" y="281"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="8" language="java" name="simulation.Shift" project="GMUworkFlow" 
-    file="/GMUworkFlow/src/simulation/Shift.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="116" y="489"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="9" language="java" name="simulation.Employee" project="GMUworkFlow" 
+  <class id="8" language="java" name="simulation.Employee" project="GMUworkFlow" 
     file="/GMUworkFlow/src/simulation/Employee.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="316" y="445"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
   <association id="10">    
-    <end type="SOURCE" refId="9" navigable="false">      
+    <end type="SOURCE" refId="8" navigable="false">      
       <attribute id="11" name="WO">        
         <position height="0" width="0" x="90" y="161"/>      
       </attribute>      
@@ -98,79 +93,59 @@
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="7"/>  
   </dependency>  
-  <generalization id="14">    
+  <dependency id="14">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <generalization id="15">    
     <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="9"/>  
+    <end type="TARGET" refId="8"/>  
   </generalization>  
-  <association id="15">    
+  <dependency id="16">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <association id="17">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="16" name="Status">        
+      <attribute id="18" name="Status">        
         <position height="0" width="0" x="176" y="62"/>      
       </attribute>      
-      <multiplicity id="17" minimum="0" maximum="1">        
+      <multiplicity id="19" minimum="0" maximum="1">        
         <position height="0" width="0" x="176" y="62"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="18">    
+  <association id="20">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="19" name="Location">        
+      <attribute id="21" name="Location">        
         <position height="0" width="0" x="650" y="-228"/>      
       </attribute>      
-      <multiplicity id="20" minimum="0" maximum="1">        
+      <multiplicity id="22" minimum="0" maximum="1">        
         <position height="0" width="0" x="650" y="-228"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="21">    
+  <association id="23">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="22" name="Type">        
+      <attribute id="24" name="Type">        
         <position height="0" width="0" x="-44" y="-252"/>      
       </attribute>      
-      <multiplicity id="23" minimum="0" maximum="1">        
+      <multiplicity id="25" minimum="0" maximum="1">        
         <position height="0" width="0" x="-44" y="-252"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="24">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="8"/>  
-  </dependency>  
-  <association id="25">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="26" name="Shift">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="27" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="28">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <dependency id="29">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="30">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="31">    
+  <dependency id="26">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="2"/>  
   </dependency>  
-  <dependency id="32">    
+  <dependency id="27">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  

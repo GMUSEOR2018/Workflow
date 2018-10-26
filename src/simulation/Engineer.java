@@ -6,7 +6,7 @@ public class Engineer extends Employee {
 		this.ID=ID;
 		this.supervisorID=suporisvorID;
 		this.name=name;
-		this.Shift=Shift.Day;
+		this.Shift=simulation.Shift.Day;
 	}
 	protected void Assign(WorkOrder WO) {
 		this.WO=WO;
