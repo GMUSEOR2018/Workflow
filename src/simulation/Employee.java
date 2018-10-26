@@ -1,6 +1,6 @@
 package simulation;
 // Employee as Parent class
-public class Employee {
+abstract class Employee {
 	protected int ID;
 	protected int supervisorID;
 	protected String name;
