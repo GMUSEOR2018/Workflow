@@ -4,15 +4,18 @@ import java.util.Date;
 
 public class Foreman extends Employee {
 
-	public Foreman(int ID, int suporisvorID, String name) {
+	public Foreman(int ID, String name, Employee suporisvor) {
 		this.ID=ID;
-		this.supervisorID=suporisvorID;
 		this.name=name;
 		this.Shift=simulation.Shift.Day;
+		this.Supervisor=suporisvor;
 	}
-	protected void Assign(WorkOrder WO) {
-		this.WO=WO;
-		Schedule();
+
+	protected void work() {
+		if(WO.isPlan()==false) {
+			this.Supervisor.Assign(WO);
+		}
+		else Schedule();
 	}
 	private void Schedule() {
 		WO.schedule(Date.from(null));//TODO need change to desired date.

@@ -2,17 +2,17 @@ package simulation;
 //Engineer for DCB
 public class Engineer extends Employee {
 //Construction
-	public Engineer(int ID, int suporisvorID, String name) {
+	public Engineer(int ID, String name, Employee suporisvor) {
 		this.ID=ID;
-		this.supervisorID=suporisvorID;
 		this.name=name;
 		this.Shift=simulation.Shift.Day;
+		this.Supervisor=suporisvor;
 	}
-	protected void Assign(WorkOrder WO) {
-		this.WO=WO;
+
+	protected void work() {
 		makePlan();
 	}
-	protected void makePlan() {
+	private void makePlan() {
 		WO.setPlan();
 	}
 }

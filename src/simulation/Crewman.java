@@ -3,15 +3,16 @@ package simulation;
 import java.util.Date;
 
 public class Crewman extends Employee {
-
-	public Crewman(int ID, int suporisvorID, String name) {
+	int CrewID;
+	public Crewman(int ID, String name, Shift S, int CrewID,Employee suporisvor) {
 		this.ID=ID;
-		this.supervisorID=suporisvorID;
 		this.name=name;
-		this.Shift=simulation.Shift.Day;
+		this.CrewID=CrewID;
+		this.Shift=S;
+		this.Supervisor=suporisvor;
 	}
-	protected void Assign(WorkOrder WO) {
-		this.WO=WO;
+	
+	protected void work() {
 		switch(WO.getStatus()) {
 		case PENDING:      Notify();       	break;
 		case TESTCOMP:     Notify();        break;
@@ -24,6 +25,7 @@ public class Crewman extends Employee {
 		}
 	}
 
+	//Crew man send notification to customer
 	private WorkOrder Notify() {
 		if(WO.getStatus()==Status.TESTCOMP) {
 			WO.updateStatus(Status.A);//TODO change name of this new Status			
@@ -34,6 +36,7 @@ public class Crewman extends Employee {
 		return TEMP;
 	}
 	
+	// crew man testing valves
 	private void TestShut(){
 		WO.updateStatus(Status.TESTCOMP);
 		if(WO.getSchedule()!=null) {
@@ -42,11 +45,13 @@ public class Crewman extends Employee {
 		else ;
 	}
 	
+	// Shut for construction
 	private void Shut() {
 		WO.updateStatus(Status.B);
 		this.WO=null;
 	}
 	
+	//Recharges main
 	private void Recharge() {
 		WO.Finsih(Date.from(null));//TODO update the finished time.
 		this.WO=null;

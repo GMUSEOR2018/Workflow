@@ -1,22 +1,21 @@
 package simulation;
 import java.util.*;
 
-abstract class WorkOrder implements TestShut{
+public class WorkOrder {
 	private int ID;
 	private Types Type;
 	private Status Status;
 	private Location Location;
 	private boolean plan;
-	private Date Report;
-	private Date Schedule;
-	private Date Finish;
+	private Date Report, Schedule, Finish;
+
 	//Constructor
-	public WorkOrder(int id, Types t, Location l,Date d ) {
+	public WorkOrder(int id, Types t, Location l,Date d, boolean P ) {
 		this.ID=id;
 		this.Type=t;
 		this.Location=l;
 		this.Status= simulation.Status.APPR;//TODO: Check if initial with APPR.
-		this.plan=false;
+		this.plan=P;
 		this.Report=d; this.Schedule=null; this.Finish=null;
 	}
 	
@@ -27,7 +26,7 @@ abstract class WorkOrder implements TestShut{
 		this.Status=s;
 	}
 	protected void Finsih(Date F) {
-		this.Status=simulation.Status.COMP; //update status after csae close
+		this.Status=simulation.Status.COMP; //update status after case close
 		this.Finish=F;
 	}
 	protected void setPlan() {
