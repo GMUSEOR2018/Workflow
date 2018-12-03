@@ -6,7 +6,7 @@ public class Crew {
 	Crewman CrewmanB;
 	Employee suporisvor;
 	//Constructor for A Crew with two Crewman.
-	private Crew(int CrewID, String nameA, int IDA, String nameB, int IDB,Employee suporisvor) {
+	private Crew(int CrewID, String nameA, int IDA, String nameB, int IDB, Employee suporisvor) {
 		this.suporisvor=suporisvor;
 		updateCrew(nameA, IDA, nameB, IDB, CrewID);
 		this.CrewName= "A"+CrewID;
