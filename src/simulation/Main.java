@@ -8,7 +8,7 @@ public class Main {
 	
 		int check=0;
 		while(check<=365) {
-		double test= Distributions.Beta(0.269, 1.06)*42.5+0.999;
+		double test= Distributions.poisson(0.404);
 		int t=(int) Math.round(test);
 		check+=t;
 		System.out.println(t);
