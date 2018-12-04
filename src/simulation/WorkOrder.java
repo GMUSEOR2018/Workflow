@@ -1,5 +1,5 @@
 package simulation;
-import java.util.*;
+import java.sql.Date;
 
 public class WorkOrder {
 	private int ID;
@@ -8,15 +8,17 @@ public class WorkOrder {
 	private Location Location;
 	private boolean plan;
 	private Date Report, Schedule, Finish;
+	Date ASSIGN = new Date(117,0,1);
 
 	//Constructor
-	public WorkOrder(int id, Types t, Location l,Date d, boolean P ) {
+	public WorkOrder(int id, Types t, Location l,int d, boolean P ) {
 		this.ID=id;
 		this.Type=t;
 		this.Location=l;
 		this.Status= simulation.Status.APPR;//TODO: Check if initial with APPR.
 		this.plan=P;
-		this.Report=d; this.Schedule=null; this.Finish=null;
+		ASSIGN.setDate(d);
+		this.Report=ASSIGN; this.Schedule=null; this.Finish=null;
 	}
 	
 	protected void schedule(Date Status) {
@@ -41,4 +43,8 @@ public class WorkOrder {
 	protected Date getReport() {return this.Report;}
 	protected Date getSchedule() {return this.Schedule;}
 	protected Date getFinish() {return this.Finish;}
+	
+	public  String toString() {
+		String S= ID+"," + Location.toString()+ "," +Type.toString()+","+ Status.toString()+ ","+ Report.toString()+"\n";
+		return S;}
 }

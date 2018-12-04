@@ -1,20 +1,22 @@
 package simulation;
 
+import java.util.Date;
+import java.io.IOException;
+import java.util.Calendar;
+
 //import java.sql.Date;
 
 public class Main {
 
-	public static void main(String[] args) {
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) throws IOException {
 	
-		int check=0;
-		while(check<=365) {
-		double test= Distributions.poisson(0.404);
-		int t=(int) Math.round(test);
-		check+=t;
-		System.out.println(t);
-		}
-		
-		System.out.println("  "+check);
+		Current C = new Current();
+		C.setUp();
+		//Date d = new Date(117,0,1);
+		//d.setDate(92);
+		//d.setDate(93);
+		//System.out.print(d.toString());
 	}
 
 }
