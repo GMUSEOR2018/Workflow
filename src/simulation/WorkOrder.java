@@ -17,7 +17,9 @@ public class WorkOrder {
 		this.Location=l;
 		this.Status= simulation.Status.APPR;//TODO: Check if initial with APPR.
 		this.plan=P;
-		ASSIGN.setDate(d);
+		if (d!=0) {
+			ASSIGN.setDate(d);
+		}
 		this.Report=ASSIGN; this.Schedule=null; this.Finish=null;
 	}
 	
@@ -45,6 +47,6 @@ public class WorkOrder {
 	protected Date getFinish() {return this.Finish;}
 	
 	public  String toString() {
-		String S= ID+"," + Location.toString()+ "," +Type.toString()+","+ Status.toString()+ ","+ Report.toString()+"\n";
+		String S= ID+"," + Location.toString()+ ","+ Status.toString()+","+ Report.toString()+ "," +Type.toString()+"\n";
 		return S;}
 }
