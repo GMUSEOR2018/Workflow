@@ -8,9 +8,11 @@ public class WorkOrder {
 	private Location Location;
 	private boolean plan;
 	private Date Report, Schedule, Finish;
-	Date ASSIGN = new Date(117,0,1);
+	@SuppressWarnings("deprecation")
+	Date ASSIGN = new Date(117,9,1);
 
 	//Constructor
+	@SuppressWarnings("deprecation")
 	public WorkOrder(int id, Types t, Location l,int d, boolean P ) {
 		this.ID=id;
 		this.Type=t;
