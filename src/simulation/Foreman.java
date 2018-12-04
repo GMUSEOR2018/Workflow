@@ -1,9 +1,10 @@
 package simulation;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Foreman extends Employee {
 
+	Date d;
 	public Foreman(int ID, String name, Employee suporisvor) {
 		this.ID=ID;
 		this.name=name;
@@ -12,12 +13,12 @@ public class Foreman extends Employee {
 	}
 
 	protected void work() {
-		if(WO.isPlan()==false) {
+		if(WO[0].isPlan()==false) {
 			this.Supervisor.Assign(WO);
 		}
 		else Schedule();
 	}
 	private void Schedule() {
-		WO.schedule(Date.from(null));//TODO need change to desired date.
+		WO[0].schedule(d);//TODO need change to desired date.
 	}
 }

@@ -13,6 +13,6 @@ public class Engineer extends Employee {
 		makePlan();
 	}
 	private void makePlan() {
-		WO.setPlan();
+		WO[0].setPlan();
 	}
 }
