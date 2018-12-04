@@ -5,7 +5,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		Boolean Demo = false;//trigger of Demo mode.
-		int replication=10000;//Nums of replication.
+		int replication=10000;//Number of replications.
 		int[] CIP= new int[replication];
 		int[] ENG= new int[replication];
 		int[] DEV= new int[replication];
@@ -48,12 +48,7 @@ public class Main {
 					}
 					else {System.out.println("No type assigned.");}
 				}
-				CIP[y]=SHCIP;
-				ENG[y]=SHENG;
-				DEV[y]=SHDEV;
-				SR[y]=SHSR;
-				MTR[y]=SHMTR;
-				INV[y]=SHINV;
+				CIP[y]=SHCIP;ENG[y]=SHENG;DEV[y]=SHDEV;SR[y]=SHSR;MTR[y]=SHMTR;INV[y]=SHINV;
 				Total[y]=SHCIP+SHENG+SHDEV+SHSR+SHMTR+SHINV;
 			}
 			String output=" Type "+"  mean  "+"  STD";

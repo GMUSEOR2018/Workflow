@@ -8,18 +8,14 @@ import java.io.IOException;
 
 public class Current {
 	int SHCIP=0,SHDEV=0,SHENG=0,SHINV=0,SHSR=0,SHMTR=0;
+	int CIP,DEV,ENG,INV,SR,MTR;
 	int NumCIP,NumDEV,NumENG,NumINV,NumSR,NumMTR;
 	
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	int x =1;
 
 	public void setUp(){
-		SHCIP=SHCIP();
-		SHENG=SHENG();
-		SHINV=SHINV();
-		SHDEV=SHDEV();
-		SHSR=SHSR();
-		SHMTR=SHMTR();
+		SHCIP=SHCIP();SHENG=SHENG();SHINV=SHINV();SHDEV=SHDEV();SHSR=SHSR();SHMTR=SHMTR();
 		
 		while(SHCIP<=365 & SHENG<=365 & SHINV<=365 & SHDEV<=365 & SHSR<=365 & SHMTR<=365) {
 			if(SHCIP<=SHENG & SHCIP<=SHINV & SHCIP<=SHDEV & SHCIP<=SHSR & SHCIP<=SHMTR & SHCIP<=365) {
@@ -81,55 +77,55 @@ public class Current {
 	@SuppressWarnings("deprecation")
 	private int SHCIP() {
 		Date d = new Date(117,0,1);//Create a new date
-		SHCIP += (int) Math.round(Distributions.Beta(0.193, 1.4)*66-0.5);
-		d.setDate(SHCIP);//Change Date.
-		if (d.getDay()==0) {SHCIP+=1;}//Skip the weekend.
-		else if (d.getDay()==6) {SHCIP+=2;}
-		return SHCIP;
+		CIP += (int) Math.round(Distributions.Beta(0.193, 1.4)*66-0.5);
+		d.setDate(CIP);//Change Date.
+		if (d.getDay()==0) {CIP+=1;}//Skip the weekend.
+		else if (d.getDay()==6) {CIP+=2;}
+		return CIP;
 	}
 	@SuppressWarnings("deprecation")
 	private int SHDEV() {
 		Date d = new Date(117,0,1);
-		SHDEV += (int) Math.round(Distributions.poisson(0.52));//0.404
-		d.setDate(SHDEV);
-		if (d.getDay()==0) {SHDEV+=1;}
-		else if (d.getDay()==6) {SHDEV+=2;}
-		return SHDEV;
+		DEV += (int) Math.round(Distributions.poisson(0.52));//0.404
+		d.setDate(DEV);
+		if (d.getDay()==0) {DEV+=1;}
+		else if (d.getDay()==6) {DEV+=2;}
+		return DEV;
 	}
 	@SuppressWarnings("deprecation")
 	private int SHENG() {
 		Date d = new Date(117,0,1);
-		SHENG += (int) Math.round(Distributions.Beta(0.374,1.1)*55.5+0.999);
-		d.setDate(SHENG);
-		if (d.getDay()==0) {SHENG+=1;}
-		else if (d.getDay()==6) {SHENG+=2;}
-		return SHENG;
+		ENG += (int) Math.round(Distributions.Beta(0.374,1.1)*55.5+0.999);
+		d.setDate(ENG);
+		if (d.getDay()==0) {ENG+=1;}
+		else if (d.getDay()==6) {ENG+=2;}
+		return ENG;
 	}
 	@SuppressWarnings("deprecation")
 	private int SHINV() {
 		Date d = new Date(117,0,1);
-		SHINV += (int) Math.round(Distributions.exponential(1.235)-0.5);
-		d.setDate(SHINV);	
-		if (d.getDay()==0) {SHINV+=1;}
-		else if (d.getDay()==6) {SHINV+=2;}
-		return SHINV;
+		INV += (int) Math.round(Distributions.exponential(1.235)-0.5);
+		d.setDate(INV);	
+		if (d.getDay()==0) {INV+=1;}
+		else if (d.getDay()==6) {INV+=2;}
+		return INV;
 	}
 	@SuppressWarnings("deprecation")
 	private int SHSR() {
 		Date d = new Date(117,0,1);	
-		SHSR += (int) Math.round(Distributions.poisson(0.36));
-		d.setDate(SHSR);		
-		if (d.getDay()==0){SHSR+=1;}
-		else if (d.getDay()==6) {SHSR+=2;}
-		return SHSR;
+		SR += (int) Math.round(Distributions.poisson(0.36));
+		d.setDate(SR);		
+		if (d.getDay()==0){SR+=1;}
+		else if (d.getDay()==6) {SR+=2;}
+		return SR;
 	}
 	@SuppressWarnings("deprecation")
 	private int SHMTR() {
 		Date d = new Date(117,0,1);	
-		SHMTR += (int) Math.round(Distributions.Beta(0.301, 5.08)*29-0.5);
-		d.setDate(SHMTR);
-		if (d.getDay()==0) {SHMTR+=1;}
-		else if (d.getDay()==6) {SHMTR+=2;}
-		return SHMTR;
+		MTR += (int) Math.round(Distributions.Beta(0.301, 5.08)*29-0.5);
+		d.setDate(MTR);
+		if (d.getDay()==0) {MTR+=1;}
+		else if (d.getDay()==6) {MTR+=2;}
+		return MTR;
 	}
 }
