@@ -12,13 +12,14 @@ public class Foreman extends Employee {
 		this.Supervisor=suporisvor;
 	}
 
-	protected void work() {
-		if(WO[0].isPlan()==false) {
-			this.Supervisor.Assign(WO);
+	protected void work(WorkOrder wo) {
+		if(wo.isPlan()==false) {
+			this.Supervisor.Assign(wo);
 		}
 		else Schedule();
 	}
+	
 	private void Schedule() {
-		WO[0].schedule(d);//TODO need change to desired date.
+		WO.get(1).schedule(d);//TODO need change to desired date.
 	}
 }

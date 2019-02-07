@@ -1,5 +1,6 @@
 package simulation;
 //Engineer for DCB
+import java.sql.Date;
 public class Engineer extends Employee {
 //Construction
 	public Engineer(int ID, String name, Employee suporisvor) {
@@ -9,10 +10,14 @@ public class Engineer extends Employee {
 		this.Supervisor=suporisvor;
 	}
 
-	protected void work() {
-		makePlan();
+	protected void work(WorkOrder wo) {
+		makePlan(wo);
 	}
-	private void makePlan() {
-		WO[0].setPlan();
+	@SuppressWarnings("deprecation")
+	private void makePlan(WorkOrder wo) {
+		Date d= wo.getReport();
+		d.setDate((int) Math.round(Distributions.Triangular(5, 6, 7)));
+		wo.setPlan(d);
+		
 	}
 }
