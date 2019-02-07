@@ -14,9 +14,9 @@ class generateWO {
 	
 	public void run() throws IOException {
 		if(Demo) {
-			Current C = new Current();
-			C.setUp();
-			C.toExcel();
+			WOgen g = new WOgen();
+			g.setUp();
+			g.toExcel();
 		}
 		else {
 			int[] CIP= new int[replication];
@@ -28,11 +28,10 @@ class generateWO {
 			int[] Total = new int[replication];
 			STAT S= new STAT();
 			for(int y = 0; y<replication;y++) {
-				Current C = new Current();
+				WOgen g = new WOgen();
 				int SHCIP = 0,SHENG = 0,SHDEV = 0,SHSR = 0,SHMTR = 0,SHINV = 0;
-				C.setUp();
-				//C.toExcel();
-				WorkOrder[] wo=C.Output();
+				g.setUp();
+				WorkOrder[] wo=g.Output();
 				for(int i=0;i<wo.length;i++) {
 					if(wo[i].getTypes()==Types.SHCIP){
 						SHCIP++;
