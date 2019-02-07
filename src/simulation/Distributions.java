@@ -4,6 +4,7 @@ import java.util.Random;
 import org.apache.commons.math3.distribution.BetaDistribution;
 import org.apache.commons.math3.distribution.ExponentialDistribution;
 import org.apache.commons.math3.distribution.PoissonDistribution;
+import org.apache.commons.math3.distribution.TriangularDistribution;
 
 public class Distributions {
 	static Random rd = new Random();
@@ -27,6 +28,12 @@ public class Distributions {
 	public static double poisson(double Lambda) {
 		PoissonDistribution P= new PoissonDistribution(Lambda);
 		return P.sample();
+	}
+	
+	public static double Triangular(double a, double c, double b) {
+		double u= Math.random();
+		TriangularDistribution t= new TriangularDistribution( a, c, b);
+		return t.cumulativeProbability(u);
 	}
 
 	   //Computes normal distribution
