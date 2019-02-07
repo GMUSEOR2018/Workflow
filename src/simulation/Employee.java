@@ -7,8 +7,8 @@ import java.util.List;
 abstract class Employee {
 	protected int ID;
 	protected String name;
-	protected Shift Shift;
-	protected Employee Supervisor;
+	protected Shift Shift=simulation.Shift.Day;
+	protected Employee Supervisor,self;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	
 	protected void Assign(WorkOrder wo2) {

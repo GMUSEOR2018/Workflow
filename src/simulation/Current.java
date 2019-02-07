@@ -14,7 +14,9 @@ public class Current {
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	Engineer E = new Engineer(1, "Kens", null);
 	Foreman F= new Foreman(2,"Andre",E);
+	@SuppressWarnings("deprecation")
 	public void run() throws IOException {
+		F.addself(F);//add self 
 		WOgen g = new WOgen();
 		g.setUp();
 		g.toExcel();
@@ -23,25 +25,25 @@ public class Current {
 		Date end = new Date(118,8,30);//End date
 		while(d.compareTo(end)!=0) {
 			for(int i=0;i<wo.length;i++) {
-				if(wo[i].getStatus()==Status.WAPPR & wo[i].getReport().compareTo(d)==0) {
+				if(wo[i].getStatus()==Status.WAPPR & wo[i].getReport().compareTo(d)==0) {//for making plan
 					E.work(wo[i]);
 				}
-				if(wo[i].getStatus()==Status.PLANCOMP & wo[i].getLast().compareTo(d)==0) {
+				if(wo[i].getStatus()==Status.PLANCOMP & wo[i].getLast().compareTo(d)==0) {//for assign assessment
 					WO.add(wo[i]);
 				}
-				if(wo[i].getStatus()==Status.APPR & wo[i].getLast().compareTo(d)==0) {
+				if(wo[i].getStatus()==Status.APPR & wo[i].getLast().compareTo(d)==0) {//for Notify
 					WO.add(wo[i]);
 				}
-				if(wo[i].getStatus()==Status.PENDING& wo[i].getLast().compareTo(d)==0) {
+				if(wo[i].getStatus()==Status.PENDING& wo[i].getLast().compareTo(d)==0) {//for test
 					WO.add(wo[i]);
 				}
-				if(wo[i].getStatus()==Status.TESTCOMP & wo[i].getLast().compareTo(d)==0) {
+				if(wo[i].getStatus()==Status.TESTCOMP & wo[i].getLast().compareTo(d)==0) {//for 2nd notify
 					WO.add(wo[i]);
 				}
-				if(wo[i].getStatus()==Status.A & wo[i].getLast().compareTo(d)==0) {
+				if(wo[i].getStatus()==Status.A & wo[i].getLast().compareTo(d)==0) {//for shut-off
 					WO.add(wo[i]);
 				}
-				if(wo[i].getStatus()==Status.B & wo[i].getLast().compareTo(d)==0) {
+				if(wo[i].getStatus()==Status.B & wo[i].getLast().compareTo(d)==0) {//for recharges
 					WO.add(wo[i]);
 				}
 			}

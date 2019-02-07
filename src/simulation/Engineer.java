@@ -6,7 +6,6 @@ public class Engineer extends Employee {
 	public Engineer(int ID, String name, Employee suporisvor) {
 		this.ID=ID;
 		this.name=name;
-		this.Shift=simulation.Shift.Day;
 		this.Supervisor=suporisvor;
 	}
 
