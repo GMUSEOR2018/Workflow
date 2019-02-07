@@ -7,7 +7,7 @@ public class WorkOrder {
 	private Status Status;
 	private Location Location;
 	private boolean plan;
-	private Date Report, Schedule, Finish;
+	private Date Report, Schedule, Finish, Last;
 	@SuppressWarnings("deprecation")
 	Date ASSIGN = new Date(117,9,1);
 
@@ -17,7 +17,7 @@ public class WorkOrder {
 		this.ID=id;
 		this.Type=t;
 		this.Location=l;
-		this.Status= simulation.Status.APPR;//TODO: Check if initial with APPR.
+		this.Status= simulation.Status.WAPPR;//TODO: Check if initial with APPR.
 		this.plan=P;
 		if (d!=0) {
 			ASSIGN.setDate(d);
@@ -35,8 +35,10 @@ public class WorkOrder {
 		this.Status=simulation.Status.COMP; //update status after case close
 		this.Finish=F;
 	}
-	protected void setPlan() {
+	protected void setPlan(Date d) {
 		this.plan=true;
+		this.Status= simulation.Status.PLANCOMP;
+		this.Last=d;
 	}
 	//return order info
 	protected int getID() {return this.ID;}
@@ -47,6 +49,7 @@ public class WorkOrder {
 	protected Date getReport() {return this.Report;}
 	protected Date getSchedule() {return this.Schedule;}
 	protected Date getFinish() {return this.Finish;}
+	protected Date getLast() {return this.Last;}
 	
 	public  String toString() {
 		String S= ID+"," + Location.toString()+ ","+ Status.toString()+","+ Report.toString()+ "," +Type.toString()+"\n";
