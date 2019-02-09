@@ -8,7 +8,8 @@ abstract class Employee {
 	protected int ID;
 	protected String name;
 	protected Shift Shift=simulation.Shift.Day;
-	protected Employee Supervisor,self;
+	protected Employee Supervisor;
+	WorkOrder[] queue;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	
 	protected void Assign(WorkOrder wo2) {
