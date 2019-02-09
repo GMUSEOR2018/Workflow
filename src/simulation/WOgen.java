@@ -65,7 +65,7 @@ public  WorkOrder[] Output() {
 }
 public void toExcel() throws IOException {
 	FileWriter FW2 = new FileWriter("WorkOrder.csv");
-	FW2.write("Work Order,Location,Status, Reported Date, Work Type,Priority, Scheduled Start,Actual Finish,Crew\n");
+	FW2.write("Work Order,Location,Status, Reported Date, Work Type,Priority, Scheduled Start,Actual Finish,Crew,Last\n");
 	for(int i=0;i<WO.size();i++) {
 		FW2.write(WO.get(i).toString());
 	}
