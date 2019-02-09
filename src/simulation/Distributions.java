@@ -14,7 +14,7 @@ public class Distributions {
 		BetaDistribution B= new BetaDistribution(alpha,beta);      
 		return B.inverseCumulativeProbability(u);
 	} 
-	
+
 	/*public static double exponential(double mean) {
 	      return (-1.0*mean)*Math.log(Math.random()); //Mean = a / lambda
 	   }*/
@@ -23,22 +23,23 @@ public class Distributions {
 		double u= Math.random();
 		ExponentialDistribution e =new ExponentialDistribution(mean);
 		return e.inverseCumulativeProbability(u);
-	   }
+	}
 	//Poisson distribution
 	public static double poisson(double Lambda) {
 		PoissonDistribution P= new PoissonDistribution(Lambda);
 		return P.sample();
 	}
+
 	
 	public static double Triangular(double a, double c, double b) {
 		double u= Math.random();
 		TriangularDistribution t= new TriangularDistribution( a, c, b);
-		return t.cumulativeProbability(u);
+		return t.inverseCumulativeProbability(u);
 	}
-
-	   //Computes normal distribution
-	   public static double normalDist(double mean, double stdev) {
-	      return rd.nextGaussian()*stdev+mean; 
-	   }
+	
+	//Computes normal distribution
+	public static double normalDist(double mean, double stdev) {
+		return rd.nextGaussian()*stdev+mean; 
+	}
 
 }
