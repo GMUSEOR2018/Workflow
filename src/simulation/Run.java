@@ -44,7 +44,6 @@ public class Run {
 					SHCIP++;
 					if(wo[i].getStatus()==Status.COMP) {
 						SHCIPC++;
-						long d=ChronoUnit.DAYS.between(LocalDate.parse(wo[i].getReport().toString()),LocalDate.parse(wo[i].getFinish().toString()));
 					}
 					else if(wo[i].getStatus()==Status.B) {
 						SHCIPS++;
@@ -57,7 +56,6 @@ public class Run {
 					SHENG++;
 					if(wo[i].getStatus()==Status.COMP) {
 						SHENGC++;
-						long d=ChronoUnit.DAYS.between(LocalDate.parse(wo[i].getReport().toString()),LocalDate.parse(wo[i].getFinish().toString()));
 					}
 					else if(wo[i].getStatus()==Status.B) {
 						SHENGS++;
@@ -70,7 +68,6 @@ public class Run {
 					SHDEV++;
 					if(wo[i].getStatus()==Status.COMP) {
 						SHDEVC++;
-						long d=ChronoUnit.DAYS.between(LocalDate.parse(wo[i].getReport().toString()),LocalDate.parse(wo[i].getFinish().toString()));
 					}
 					else if(wo[i].getStatus()==Status.B) {
 						SHDEVS++;
@@ -83,7 +80,6 @@ public class Run {
 					SHSR++;
 					if(wo[i].getStatus()==Status.COMP) {
 						SHSRC++;
-						long d=ChronoUnit.DAYS.between(LocalDate.parse(wo[i].getReport().toString()),LocalDate.parse(wo[i].getFinish().toString()));
 					}
 					else if(wo[i].getStatus()==Status.B) {
 						SHSRS++;
@@ -96,7 +92,6 @@ public class Run {
 					SHMTR++;
 					if(wo[i].getStatus()==Status.COMP) {
 						SHMTRC++;
-						long d=ChronoUnit.DAYS.between(LocalDate.parse(wo[i].getReport().toString()),LocalDate.parse(wo[i].getFinish().toString()));
 					}
 					else if(wo[i].getStatus()==Status.B) {
 						SHMTRS++;
@@ -109,7 +104,6 @@ public class Run {
 					SHINV++;
 					if(wo[i].getStatus()==Status.COMP) {
 						SHINVC++;
-						long d=ChronoUnit.DAYS.between(LocalDate.parse(wo[i].getReport().toString()),LocalDate.parse(wo[i].getFinish().toString()));
 					}
 					else if(wo[i].getStatus()==Status.B) {
 						SHINVS++;
