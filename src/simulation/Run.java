@@ -1,4 +1,5 @@
 package simulation;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
@@ -6,18 +7,22 @@ import java.time.LocalDate;
 public class Run {
 	Boolean Demo = true;//trigger of Demo mode.//false
 	int replication;//Number of replications.
+	double[] avgDelay;
+	int[][] delay;
+	STAT S= new STAT();
 	Run() {}
 	Run(int r) {
 		this.replication=r;
 		this.Demo=false;
 	}
 	public void sim() throws IOException, CloneNotSupportedException {
+		long t = System.currentTimeMillis(); // start time record.
 		if(Demo) {
 			Current c= new Current();
 			c.run();
 			c.toExcel();
 		}
-		int[] CIP= new int[replication];int[] CIPC= new int[replication];int[] CIPS= new int[replication];int[] CIPT= new int[replication];
+		int[] CIP= new int[replication];int[] CIPC= new int[replication];int[] CIPS= new int[replication];int[] CIPT= new int[replication];//TODO:change to array
 		int[] ENG= new int[replication];int[] ENGC= new int[replication];int[] ENGS= new int[replication];int[] ENGT= new int[replication];
 		int[] DEV= new int[replication];int[] DEVC= new int[replication];int[] DEVS= new int[replication];int[] DEVT= new int[replication];
 		int[] SR= new int[replication];int[] SRC= new int[replication];int[] SRS= new int[replication];int[] SRT= new int[replication];
@@ -26,9 +31,10 @@ public class Run {
 		int[] Total = new int[replication];int[] TotalC = new int[replication];int[] TotalS = new int[replication];int[] TotalT = new int[replication];
 		int[] CIPU= new int[replication];int[] ENGU= new int[replication];int[] DEVU= new int[replication];int[] TotalU = new int[replication];
 		int[] SRU= new int[replication];int[] MTRU= new int[replication];int[] INVU= new int[replication];
-		long t = System.currentTimeMillis(); 
-		STAT S= new STAT();
+
 		double[][] days= new double[7][replication];
+		
+		delay=new int[replication][];
 		for(int y = 0; y<replication;y++) {
 			int SHCIP = 0,SHCIPC =0,SHCIPS = 0,SHCIPT = 0;
 			int SHENG = 0,SHENGC = 0,SHENGS = 0,SHENGT = 0;
@@ -38,7 +44,7 @@ public class Run {
 			int SHINV = 0,SHINVC = 0,SHINVS = 0,SHINVT = 0; 
 			Current c= new Current();
 			c.run();
-			WorkOrder[] wo=c.Output();
+			WorkOrder[] wo=c.Output();			
 			for(int i=0;i<wo.length;i++) {
 				if(wo[i].getTypes()==Types.SHCIP){
 					SHCIP++;
@@ -114,7 +120,7 @@ public class Run {
 				}
 				else System.out.println("No type assigned.");
 			}
-			double[] result=days(wo, SHCIPC,SHENGC,SHDEVC,SHSRC,SHMTRC,SHINVC,SHCIPC+SHENGC+SHDEVC+SHSRC+SHMTRC+SHINVC);
+			double[] result=days(wo, SHCIPC,SHENGC,SHDEVC,SHSRC,SHMTRC,SHINVC,SHCIPC+SHENGC+SHDEVC+SHSRC+SHMTRC+SHINVC);//TODO:Change to array 
 			CIP[y]=SHCIP;CIPC[y]=SHCIPC;CIPS[y]=SHCIPS;CIPT[y]=SHCIPT;CIPU[y]=SHCIP-SHCIPC;
 			ENG[y]=SHENG;ENGC[y]=SHENGC;ENGS[y]=SHENGS;ENGT[y]=SHENGT;ENGU[y]=SHENG-SHENGC;
 			DEV[y]=SHDEV;DEVC[y]=SHDEVC;DEVS[y]=SHDEVS;DEVT[y]=SHDEVT;DEVU[y]=SHDEV-SHDEVC;
@@ -131,10 +137,22 @@ public class Run {
 				System.out.println(xstr+ "% complete");
 			}
 			for(int q=0;q<result.length;q++) {
-			days[q][y]=result[q];
+				days[q][y]=result[q];
 			}
+			delay[y]=c.Delay();
 		}
 		System.out.println("100 % complete");
+
+		avgDelay= new double[delay[0].length];
+		int[] temp=new int[delay.length];
+		for(int f=0; f<delay[0].length;f++) {
+			for(int d=0;d<delay.length;d++) {
+				temp[d]=delay[d][f];
+			}
+			avgDelay[f]=S.mean(temp);	
+		}
+
+
 		String output=" Type "+" imput"+" input STD"+" Completed"+ " Shut-off" +" Tested"+" Unfinished"+" avg finish time";
 		System.out.println(output);
 		output="SHCIP  "+ Double.toString(S.mean(CIP))+ "\t" + String.format( "%.2f",S.stv(CIP))+"\t"+ Double.toString(S.mean(CIPC))+"\t  " 
@@ -160,6 +178,16 @@ public class Run {
 		System.out.println(output);
 		System.out.print("\n"+replication+" runs done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.");
 	}
+
+	public void Backlog() throws IOException {
+		FileWriter FW2 = new FileWriter("Delay.csv");
+		for(int i=0;i<avgDelay.length;i++) {
+			int day=i+1;
+			FW2.write(day+","+ String.format( "%.2f",avgDelay[i])+"\n");
+		}
+		FW2.flush();
+		FW2.close();
+	} 
 
 	private double[] days(WorkOrder[] wo,int SHCIPC,int SHENGC,int SHDEVC,int SHSRC,int SHMTRC,int SHINVC,int TotalC) {
 		double[] result=new double[7];

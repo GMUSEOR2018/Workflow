@@ -9,12 +9,10 @@ import java.io.IOException;
 public class Current {
 	Boolean Demo = true;//trigger of Demo mode.
 	int replication;//Number of replications.
-	int SHCIP=0,SHDEV=0,SHENG=0,SHINV=0,SHSR=0,SHMTR=0,x=0,c=3;
-	int CIP,DEV,ENG,INV,SR,MTR;
-	int NumCIP,NumDEV,NumENG,NumINV,NumSR,NumMTR;
+	int x=0,c=3;int count=0;
 	int crewNum=8,DayCrew=6,Evening=1,Night=1;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
-	WorkOrder[] wo;
+	WorkOrder[] wo;Integer[] queue;int[] Queue;
 	List<Integer> queueCount = new ArrayList<Integer>();
 	Engineer E = new Engineer(1, "Kens", null);
 	Foreman F= new Foreman(2,"Andre",E);
@@ -27,7 +25,9 @@ public class Current {
 		Date d = new Date(117,9,1);//Start date
 		Date end = new Date(118,8,30);//End date
 		while(d.compareTo(end)<0) {
-			int count=0;
+			if(d.getDay()!=6 && d.getDay()!=0) {
+				count=0;
+			}
 			Day(d);
 			Evening(d);
 			Night(d);
@@ -41,13 +41,16 @@ public class Current {
 			x +=1;
 			d=  new Date(117,9,1);
 			d.setDate(x);
-			///System.out.println(d.toString());//test use
 		}
-		Integer[] queue =queueCount.toArray(new Integer[queueCount.size()]);
+		queue =queueCount.toArray(new Integer[queueCount.size()]);
+		Queue =new int[queue.length];
+		for (int i = 0; i < queue.length; i++) {
+		    Queue[i] = queueCount.get(i);
+		}
 		queueCount.clear();
 	}
 
-	public void Day(Date d) throws IOException, CloneNotSupportedException {
+	public void Day(Date d) throws IOException, CloneNotSupportedException {//day crew operation
 		Crew[] crews = new Crew[DayCrew];
 		for(int i=0;i<DayCrew;i++){
 			crews[i]= new Crew(i, Integer.toString(c),c,Integer.toString(c+1),c+1,F);
@@ -72,7 +75,7 @@ public class Current {
 		WO.clear();
 	}
 
-	public void Evening(Date d) throws IOException, CloneNotSupportedException {
+	public void Evening(Date d) throws IOException, CloneNotSupportedException {//Evening crew operation
 		Crew[] crews = new Crew[Evening];
 		int x=0;
 		for(int i=DayCrew;i<DayCrew+Evening;i++){
@@ -100,7 +103,7 @@ public class Current {
 		WO.clear();
 	}
 
-	public void Night(Date d) throws IOException, CloneNotSupportedException {
+	public void Night(Date d) throws IOException, CloneNotSupportedException {//Night crew operation
 		Crew[] crews = new Crew[Night];
 		int x=0;
 		for(int i=DayCrew+Evening;i<crewNum;i++){
@@ -140,5 +143,9 @@ public class Current {
 		}
 		FW2.flush();
 		FW2.close();
+	} 
+
+	protected int[] Delay(){
+		return Queue;
 	} 
 }

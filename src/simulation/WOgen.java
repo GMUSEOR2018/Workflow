@@ -3,8 +3,7 @@ package simulation;
 import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.FileWriter;
-import java.io.IOException;
+
 
 public class WOgen {
 	int SHCIP=0,SHDEV=0,SHENG=0,SHINV=0,SHSR=0,SHMTR=0;
@@ -63,16 +62,6 @@ public  WorkOrder[] Output() {
 	WorkOrder[] workorder =WO.toArray(new WorkOrder[WO.size()]);
 	return workorder;
 }
-public void toExcel() throws IOException {
-	FileWriter FW2 = new FileWriter("WorkOrder.csv");
-	FW2.write("Work Order,Location,Status, Reported Date, Work Type,Priority, Scheduled Start,Actual Finish,Crew,Last\n");
-	for(int i=0;i<WO.size();i++) {
-		FW2.write(WO.get(i).toString());
-	}
-	FW2.flush();
-	FW2.close();
-} 
-
 
 //Generate the WO with respected distribution expression.
 @SuppressWarnings("deprecation")
