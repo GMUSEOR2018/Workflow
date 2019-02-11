@@ -214,11 +214,4 @@ public class Run {
 		result[3]=S.mean(SRA);result[4]=S.mean(MTRA);result[5]=S.mean(INVA);result[6]=S.mean(TotalA);
 		return result;
 	}
-
-
 }
-
-
-
-
-
