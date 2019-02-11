@@ -1,16 +1,12 @@
 package simulation;
 import java.io.IOException;
-import java.sql.Date;
+
 
 public class Main {
-
 	public static void main(String[] args) throws IOException, CloneNotSupportedException {
-	//generateWO g = new generateWO(10000);
-	//g.run();
-	Current c= new Current();
-	c.run();
-	System.out.print("Done!!");
-
+		System.out.println("Start!");
+		Run r =new Run(100);
+		r.sim();
+		System.out.println("Done!");
 	}
-
 }
