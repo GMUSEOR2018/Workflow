@@ -62,6 +62,9 @@ public class Crew {
 
 	// Shut for construction
 	protected double Shut(WorkOrder WO) {
+		if(CrewmanA.Shift==Shift.Day) {
+			WO.shut(0);//evening crew may able to recharge it.
+		}
 		WO.shut(1);//check time
 		double duration=Distributions.Triangular(1, 2, 4)+ Distributions.Triangular(0.083, 0.33, 1);//shut-off time + travel time;
 		return duration;

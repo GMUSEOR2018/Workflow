@@ -60,11 +60,10 @@ public class Foreman extends Employee {
 				if(time>8) {
 					i--;
 					Wo[i].Clone(temp);
-					System.out.println(t);
 				}
 			}
 		}
 		int queue=Wo.length-i;
-		//system.out.println(queue);
+		
 	}
 }

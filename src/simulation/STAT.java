@@ -10,6 +10,14 @@ public class STAT {
 		   }
 		   return sum/length;
 	   }
+	protected double mean(double data[]) {// Calculating mean
+		   double sum=0;
+		   int length=data.length;
+		   for(int i=0; i<length;i++) {
+			   sum+=data[i];
+		   }
+		   return sum/length;
+	   }
 	   protected double stv(int data[]) {// Calculating STDV
 		   double sum=0;
 		   double mean=mean(data);

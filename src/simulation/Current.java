@@ -7,9 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Current {
+	Boolean Demo = true;//trigger of Demo mode.
+	int replication;//Number of replications.
 	int SHCIP=0,SHDEV=0,SHENG=0,SHINV=0,SHSR=0,SHMTR=0,x=0,c=3;
 	int CIP,DEV,ENG,INV,SR,MTR;
 	int NumCIP,NumDEV,NumENG,NumINV,NumSR,NumMTR;
+	int crewNum=8,DayCrew=6,Evening=1,Night=1;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	WorkOrder[] wo;
 	List<Integer> queueCount = new ArrayList<Integer>();
@@ -26,8 +29,8 @@ public class Current {
 		while(d.compareTo(end)<0) {
 			int count=0;
 			Day(d);
-			//Evening(d);
-			//Night(d);
+			Evening(d);
+			Night(d);
 			for(int i=0;i<wo.length;i++) {
 				if( wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()!=Status.COMP) {//find unfinished order
 					wo[i].updateNext(1);
@@ -38,22 +41,19 @@ public class Current {
 			x +=1;
 			d=  new Date(117,9,1);
 			d.setDate(x);
-			System.out.println(d.toString());
+			///System.out.println(d.toString());//test use
 		}
 		Integer[] queue =queueCount.toArray(new Integer[queueCount.size()]);
 		queueCount.clear();
-		toExcel();
 	}
 
 	public void Day(Date d) throws IOException, CloneNotSupportedException {
-		int crewNum=8;
-		Crew[] crews = new Crew[crewNum];
-		for(int i=0;i<crewNum;i++){
+		Crew[] crews = new Crew[DayCrew];
+		for(int i=0;i<DayCrew;i++){
 			crews[i]= new Crew(i, Integer.toString(c),c,Integer.toString(c+1),c+1,F);
 			c+=2;
 		}
 		F.addCrew(crews);//add crew to foreman
-
 		for(int i=0;i<wo.length;i++) {
 			if(wo[i].getReport().compareTo(d)==0 & wo[i].getStatus()==Status.WAPPR ) {//for making test plan
 				E.work(wo[i]);
@@ -73,58 +73,65 @@ public class Current {
 	}
 
 	public void Evening(Date d) throws IOException, CloneNotSupportedException {
-		Crew[] crews = new Crew[1];
-		crews[0]=new Crew(7, "15",15,"16",16,F);
-		crews[0].changeShift(Shift.Afternoon);
+		Crew[] crews = new Crew[Evening];
+		int x=0;
+		for(int i=DayCrew;i<DayCrew+Evening;i++){
+			crews[x]= new Crew(i, Integer.toString(c),c,Integer.toString(c+1),c+1,F);
+			crews[x].changeShift(Shift.Afternoon);
+			x++;
+			c+=2;
+		}
 		F.addCrew(crews);//add crew to foreman
-
 		for(int i=0;i<wo.length;i++) {
-			if(wo[i].getStatus()==Status.WAPPR & wo[i].getReport().compareTo(d)==0) {//for making plan
+			if(wo[i].getReport().compareTo(d)==0 & wo[i].getStatus()==Status.WAPPR ) {//for making test plan
 				E.work(wo[i]);
 			}
-			else if(wo[i].getStatus()!=Status.WAPPR & wo[i].getNext().compareTo(d)==0) {//for assign assessment
+			else if(wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()!=Status.COMP & wo[i].getStatus()!=Status.PENDING) {
 				WO.add(wo[i]);
 			}
-			WorkOrder[] queue =WO.toArray(new WorkOrder[WO.size()]);
-			WO.clear();		
-			F.receive(queue);// add new WO to Foreman		
+			else if(wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()==Status.PENDING & wo[i].getTypes()==Types.SHINV) {
+				F.inquiry(wo[i]);
+			}
 		}
+		WorkOrder[] queue =WO.toArray(new WorkOrder[WO.size()]);
+		if(queue.length>0) {
+			F.receive(queue);// add new WO to Foreman
+		}
+		WO.clear();
 	}
 
 	public void Night(Date d) throws IOException, CloneNotSupportedException {
-		Crew[] crews = new Crew[1];
-		crews[0]=new Crew(8, "17",17,"18",18,F);
-		crews[0].changeShift(Shift.Night);
+		Crew[] crews = new Crew[Night];
+		int x=0;
+		for(int i=DayCrew+Evening;i<crewNum;i++){
+			crews[x]= new Crew(i, Integer.toString(c),c,Integer.toString(c+1),c+1,F);
+			crews[x].changeShift(Shift.Night);
+			c+=2;
+			x++;
+		}
 		F.addCrew(crews);//add crew to foreman
-
 		for(int i=0;i<wo.length;i++) {
-			if(wo[i].getStatus()==Status.WAPPR & wo[i].getReport().compareTo(d)==0) {//for making plan
+			if(wo[i].getReport().compareTo(d)==0 & wo[i].getStatus()==Status.WAPPR ) {//for making test plan
 				E.work(wo[i]);
 			}
-			else if(wo[i].getStatus()==Status.PLANCOMP & wo[i].getNext().compareTo(d)==0) {//for assign assessment
+			else if(wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()!=Status.COMP & wo[i].getStatus()!=Status.PENDING) {
 				WO.add(wo[i]);
 			}
-			else if(wo[i].getStatus()==Status.TESTING & wo[i].getNext().compareTo(d)==0) {//for Notify
-				WO.add(wo[i]);
+			else if(wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()==Status.PENDING & wo[i].getTypes()==Types.SHINV) {
+				F.inquiry(wo[i]);
 			}
-			else if(wo[i].getStatus()==Status.PENDING& wo[i].getNext().compareTo(d)==0) {//for test
-				WO.add(wo[i]);
-			}
-			else if(wo[i].getStatus()==Status.TESTCOMP & wo[i].getNext().compareTo(d)==0) {//for 2nd notify
-				WO.add(wo[i]);
-			}
-			else if(wo[i].getStatus()==Status.A & wo[i].getNext().compareTo(d)==0) {//for shut-off
-				WO.add(wo[i]);
-			}
-			else if(wo[i].getStatus()==Status.B & wo[i].getNext().compareTo(d)==0) {//for recharges
-				WO.add(wo[i]);
-			}
-			WorkOrder[] queue =WO.toArray(new WorkOrder[WO.size()]);
-			WO.clear();		
+		}
+		WorkOrder[] queue =WO.toArray(new WorkOrder[WO.size()]);
+		if(queue.length>0) {
 			F.receive(queue);// add new WO to Foreman
 		}
+		WO.clear();
 	}
-
+	
+	public  WorkOrder[] Output() {
+		return wo;
+	}
+	
 	public void toExcel() throws IOException {
 		FileWriter FW2 = new FileWriter("WorkOrder.csv");
 		FW2.write("Work Order,Location,Status, Reported Date, Work Type,Priority,Test,Scheduled Start,Shut,Actual Finish,Crew,Last,Next\n");
