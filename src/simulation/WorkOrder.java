@@ -16,11 +16,13 @@ public class WorkOrder {
 	public WorkOrder(int id, Types t, Location l,int d, boolean P ) {
 		this.ID=id;this.Type=t;this.Location=l;this.plan=P;
 		this.Status= simulation.Status.WAPPR;
-		if (d!=0) {
+		if (d!=0) {//check for valid date
 			ASSIGN.setDate(d);
 		}
-		this.Report=(Date) ASSIGN.clone(); this.Last=(Date) this.ASSIGN.clone(); 
-		this.Schedule=null;this.Finish=null;this.Test=null;this.Shut=null;this.next=(Date) this.ASSIGN.clone();
+		this.Report=(Date) ASSIGN.clone(); 
+		this.Last=(Date) this.ASSIGN.clone();
+		this.next=(Date) this.ASSIGN.clone();
+		this.Schedule=null;this.Finish=null;this.Test=null;this.Shut=null;
 	}
 
 	protected void setPlan(int d) {
@@ -29,10 +31,10 @@ public class WorkOrder {
 			updateLast();
 		}
 		else if(Status==simulation.Status.WAPPR) {
-			if(Type==Types.SHINV) {
-				this.Status= simulation.Status.PENDING;
+			if(Type==Types.SHMTR) {
+				updateStatus(simulation.Status.PENDING);
 			}
-			else this.Status= simulation.Status.PLANCOMP;
+			else updateStatus(simulation.Status.PLANCOMP);
 		}
 		updateNext(d);
 	}
@@ -47,11 +49,10 @@ public class WorkOrder {
 
 	protected void schedule(int d) {
 		updateStatus(simulation.Status.A);//TODO change name of this new Status
+		this.Schedule=(Date) this.next.clone();
 		updateLast();
 		updateNext(d);
-		this.Schedule=(Date) this.next.clone();
 	}
-
 
 	protected void shut(int d) {
 		updateStatus(simulation.Status.B);
@@ -61,14 +62,13 @@ public class WorkOrder {
 	}
 
 	protected void Finsih() {
-		this.Status=simulation.Status.COMP; //update status after case close
+		updateStatus(simulation.Status.COMP); //update status after case close
 		this.Finish=(Date) this.next.clone();
 	}
 
 	protected void updateStatus(Status s) {
 		this.Status=s;
 	}
-
 
 	protected void updateLast() {
 		this.Last=(Date) this.next.clone();
@@ -79,16 +79,16 @@ public class WorkOrder {
 		int day=next.getDate()+d;
 		Date Temp=(Date) next.clone();
 		Temp.setDate(day);
-		if (Temp.getDay()==0){
+		if (Temp.getDay()==0){//void Saturday
 			this.next.setDate(day+1);
 		}
-		else if (Temp.getDay()==6) {
+		else if (Temp.getDay()==6) {//void Sunday
 			this.next.setDate(day+2);
 		}
 		else this.next=(Date)Temp.clone();
 	}
 
-	protected void Clone(WorkOrder wo1) {
+	protected void Clone(WorkOrder wo1) {//Clone a WO
 		this.ID=wo1.getID();this.Type=wo1.getTypes();this.Location=wo1.getLoation();this.plan=wo1.isPlan();
 		this.Status=wo1.getStatus();this.Report=wo1.getReport(); this.Last=wo1.getLast();
 		this.Schedule=wo1.getSchedule();this.Finish=wo1.getFinish();this.Test=wo1.getTest();
