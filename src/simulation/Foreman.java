@@ -30,8 +30,7 @@ public class Foreman extends Employee {
 	private void Schedule() throws CloneNotSupportedException {
 		int i=0;
 		for(int j=0;j<Crews.length;j++) {
-			double time=0;
-			double t=0;
+			double time=0,t=0;
 			time =Distributions.exponential(1)*2;//break time
 			while(time<=8 & i<Wo.length) {
 				temp=Wo[i];
@@ -63,7 +62,5 @@ public class Foreman extends Employee {
 				}
 			}
 		}
-		int queue=Wo.length-i;
-		
 	}
 }
