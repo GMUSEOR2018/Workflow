@@ -9,12 +9,29 @@ public class Run {
 	int replication;//Number of replications.
 	double[] avgDelay;
 	int[][] delay;
+	String[] type ={"SHCIP","SHENG","SHDEV","SHSR","SHMTR","SHINV","Total"};
+	//			1.CIP
+	//			2.ENG
+	//			3.DEV
+	//			4.SR
+	//			5.MTR
+	//			6.INV
+	//			7.Total
+	int[][] WorkOrder = new int[7][replication];
+	int[][] Complete = new int[7][replication];
+	int[][] Shut = new int[7][replication];
+	int[][] Test = new int[7][replication];
+	int[][] Unfinished = new int[7][replication];
+	double[][] days= new double[7][replication];
 	STAT S= new STAT();
+	
 	Run() {}
+	
 	Run(int r) {
 		this.replication=r;
 		this.Demo=false;
 	}
+	
 	public void sim() throws IOException, CloneNotSupportedException {
 		long t = System.currentTimeMillis(); // start time record.
 		if(Demo) {
@@ -22,18 +39,12 @@ public class Run {
 			c.run();
 			c.toExcel();
 		}
-		int[] CIP= new int[replication];int[] CIPC= new int[replication];int[] CIPS= new int[replication];int[] CIPT= new int[replication];//TODO:change to array
-		int[] ENG= new int[replication];int[] ENGC= new int[replication];int[] ENGS= new int[replication];int[] ENGT= new int[replication];
-		int[] DEV= new int[replication];int[] DEVC= new int[replication];int[] DEVS= new int[replication];int[] DEVT= new int[replication];
-		int[] SR= new int[replication];int[] SRC= new int[replication];int[] SRS= new int[replication];int[] SRT= new int[replication];
-		int[] MTR= new int[replication];int[] MTRC= new int[replication];int[] MTRS= new int[replication];int[] MTRT= new int[replication];
-		int[] INV= new int[replication];int[] INVC= new int[replication];int[] INVS= new int[replication];int[] INVT= new int[replication];
-		int[] Total = new int[replication];int[] TotalC = new int[replication];int[] TotalS = new int[replication];int[] TotalT = new int[replication];
-		int[] CIPU= new int[replication];int[] ENGU= new int[replication];int[] DEVU= new int[replication];int[] TotalU = new int[replication];
-		int[] SRU= new int[replication];int[] MTRU= new int[replication];int[] INVU= new int[replication];
-
-		double[][] days= new double[7][replication];
-		
+		WorkOrder = new int[7][replication];
+		Complete = new int[7][replication];
+		Shut = new int[7][replication];
+		Test = new int[7][replication];
+		Unfinished = new int[7][replication];
+		days= new double[7][replication];
 		delay=new int[replication][];
 		for(int y = 0; y<replication;y++) {
 			int SHCIP = 0,SHCIPC =0,SHCIPS = 0,SHCIPT = 0;
@@ -121,16 +132,16 @@ public class Run {
 				else System.out.println("No type assigned.");
 			}
 			double[] result=days(wo, SHCIPC,SHENGC,SHDEVC,SHSRC,SHMTRC,SHINVC,SHCIPC+SHENGC+SHDEVC+SHSRC+SHMTRC+SHINVC);//TODO:Change to array 
-			CIP[y]=SHCIP;CIPC[y]=SHCIPC;CIPS[y]=SHCIPS;CIPT[y]=SHCIPT;CIPU[y]=SHCIP-SHCIPC;
-			ENG[y]=SHENG;ENGC[y]=SHENGC;ENGS[y]=SHENGS;ENGT[y]=SHENGT;ENGU[y]=SHENG-SHENGC;
-			DEV[y]=SHDEV;DEVC[y]=SHDEVC;DEVS[y]=SHDEVS;DEVT[y]=SHDEVT;DEVU[y]=SHDEV-SHDEVC;
-			SR[y]=SHSR;SRC[y]=SHSRC;SRS[y]=SHSRS;SRT[y]=SHSRT;SRU[y]=SHSR-SHSRC;
-			MTR[y]=SHMTR;MTRC[y]=SHMTRC;MTRS[y]=SHMTRS;MTRT[y]=SHMTRT;MTRU[y]=SHMTR-SHMTRC;
-			INV[y]=SHINV;INVC[y]=SHINVC;INVS[y]=SHINVS;INVT[y]=SHINVT;INVU[y]=SHINV-SHINVC;
-			Total[y]=SHCIP+SHENG+SHDEV+SHSR+SHMTR+SHINV;TotalU[y]=SHCIP+SHENG+SHDEV+SHSR+SHMTR+SHINV-(SHCIPC+SHENGC+SHDEVC+SHSRC+SHMTRC+SHINVC);
-			TotalC[y]=SHCIPC+SHENGC+SHDEVC+SHSRC+SHMTRC+SHINVC;
-			TotalS[y]=SHCIPS+SHENGS+SHDEVS+SHSRS+SHMTRS+SHINVS;
-			TotalT[y]=SHCIPT+SHENGT+SHDEVT+SHSRT+SHMTRT+SHINVT;
+		
+			WorkOrder[0][y]=SHCIP;Complete[0][y]=SHCIPC;Shut[0][y]=SHCIPS;Test[0][y]=SHCIPT;Unfinished[0][y]=SHCIP-SHCIPC;
+			WorkOrder[1][y]=SHENG;Complete[1][y]=SHENGC;Shut[1][y]=SHENGS;Test[1][y]=SHENGT;Unfinished[1][y]=SHENG-SHENGC;
+			WorkOrder[2][y]=SHDEV;Complete[2][y]=SHDEVC;Shut[2][y]=SHDEVS;Test[2][y]=SHDEVT;Unfinished[2][y]=SHDEV-SHDEVC;
+			WorkOrder[3][y]=SHSR;Complete[3][y]=SHSRC;Shut[3][y]=SHSRS;Test[3][y]=SHSRT;Unfinished[3][y]=SHSR-SHSRC;
+			WorkOrder[4][y]=SHMTR;Complete[4][y]=SHMTRC;Shut[4][y]=SHMTRS;Test[4][y]=SHMTRT;Unfinished[4][y]=SHMTR-SHMTRC;
+			WorkOrder[5][y]=SHINV;Complete[5][y]=SHINVC;Shut[5][y]=SHINVS;Test[5][y]=SHINVT;Unfinished[5][y]=SHINV-SHINVC;
+			WorkOrder[6][y]=SHCIP+SHENG+SHDEV+SHSR+SHMTR+SHINV;Unfinished[6][y]=SHCIP+SHENG+SHDEV+SHSR+SHMTR+SHINV-(SHCIPC+SHENGC+SHDEVC+SHSRC+SHMTRC+SHINVC);
+			Complete[6][y]=SHCIPC+SHENGC+SHDEVC+SHSRC+SHMTRC+SHINVC;Shut[6][y]=SHCIPS+SHENGS+SHDEVS+SHSRS+SHMTRS+SHINVS;Test[6][y]=SHCIPT+SHENGT+SHDEVT+SHSRT+SHMTRT+SHINVT;
+
 			double x = 100.0*y/replication;
 			if(x%5==0& x!=0) {
 				String xstr = String.format("%3.3g", x);
@@ -142,7 +153,6 @@ public class Run {
 			delay[y]=c.Delay();
 		}
 		System.out.println("100 % complete");
-
 		avgDelay= new double[delay[0].length];
 		int[] temp=new int[delay.length];
 		for(int f=0; f<delay[0].length;f++) {
@@ -152,33 +162,38 @@ public class Run {
 			avgDelay[f]=S.mean(temp);	
 		}
 
-
-		String output=" Type "+" imput"+" input STD"+" Completed"+ " Shut-off" +" Tested"+" Unfinished"+" avg finish time";
-		System.out.println(output);
-		output="SHCIP  "+ Double.toString(S.mean(CIP))+ "\t" + String.format( "%.2f",S.stv(CIP))+"\t"+ Double.toString(S.mean(CIPC))+"\t  " 
-				+  Double.toString(S.mean(CIPS))+ "\t  " + Double.toString(S.mean(CIPT))+ "\t  " + Double.toString(S.mean(CIPU))+ "\t\t" +String.format( "%.2f",S.mean(days[0]));
-		System.out.println(output);
-		output="SHENG   "+ Double.toString(S.mean(ENG))+ "\t" + String.format( "%.2f",S.stv(ENG))+"\t"+ Double.toString(S.mean(ENGC))+ "\t  "
-				+Double.toString(S.mean(ENGS))+ "\t  " +Double.toString(S.mean(ENGT))+ "\t  " +Double.toString(S.mean(ENGU))+ "\t\t" +String.format( "%.2f",S.mean(days[1]));
-		System.out.println(output);
-		output="SHDEV  "+ Double.toString(S.mean(DEV))+ "\t" + String.format( "%.2f",S.stv(DEV))+"\t"+ Double.toString(S.mean(DEVC))+ "\t  "
-				+ Double.toString(S.mean(DEVS))+ "\t  "+ Double.toString(S.mean(DEVT))+ "\t  "+ Double.toString(S.mean(DEVU))+ "\t\t" +String.format( "%.2f",S.mean(days[2]));
-		System.out.println(output);
-		output="SHSR   "+ Double.toString(S.mean(SR))+ "\t" + String.format( "%.2f",S.stv(SR))+"\t"+ Double.toString(S.mean(SRC))+ "\t  " 
-				+ Double.toString(S.mean(SRS))+ "\t  " + Double.toString(S.mean(SRT))+ "\t  " + Double.toString(S.mean(SRU))+ "\t\t" +String.format( "%.2f",S.mean(days[3]));
-		System.out.println(output);
-		output="SHMTR  "+ Double.toString(S.mean(MTR))+ "\t" + String.format( "%.2f",S.stv(MTR))+"\t"+ Double.toString(S.mean(MTRC))+ "\t  "
-				+ Double.toString(S.mean(MTRS))+ "\t  " + Double.toString(S.mean(MTRT))+ "\t  " + Double.toString(S.mean(MTRU))+ "\t\t" +String.format( "%.2f",S.mean(days[4]));
-		System.out.println(output);
-		output="SHINV  "+ Double.toString(S.mean(INV))+ "\t" + String.format( "%.2f",S.stv(INV))+"\t"+ Double.toString(S.mean(INVC))+ "\t  "
-				+ Double.toString(S.mean(INVS))+ "\t  "+ Double.toString(S.mean(INVT))+ "\t  "+ Double.toString(S.mean(INVU))+ "\t\t" +String.format( "%.2f",S.mean(days[5]));
-		System.out.println(output);
-		output="Total "+ Double.toString(S.mean(Total))+ "\t" + String.format( "%.2f",S.stv(Total))+"\t"+ Double.toString(S.mean(TotalC))+ "\t  " 
-				+ Double.toString(S.mean(TotalS))+ "\t  " + Double.toString(S.mean(TotalT))+ "\t  " + Double.toString(S.mean(TotalU))+ "\t\t" +String.format( "%.2f",S.mean(days[6]));
-		System.out.println(output);
+		System.out.print(output());
 		System.out.print("\n"+replication+" runs done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.");
+		//System.out.println(output);
+		//		output="SHENG   "+ Double.toString(S.mean(WorkOrder[1]))+ "\t" + String.format( "%.2f",S.stv(WorkOrder[0]))+"\t"+ Double.toString(S.mean(ENGC))+ "\t  "
+		//				+Double.toString(S.mean(ENGS))+ "\t  " +Double.toString(S.mean(ENGT))+ "\t  " +Double.toString(S.mean(ENGU))+ "\t\t" +String.format( "%.2f",S.mean(days[1]));
+		//		System.out.println(output);
+		//		output="SHDEV  "+ Double.toString(S.mean(WorkOrder[2]))+ "\t" + String.format( "%.2f",S.stv(WorkOrder[0]))+"\t"+ Double.toString(S.mean(DEVC))+ "\t  "
+		//				+ Double.toString(S.mean(DEVS))+ "\t  "+ Double.toString(S.mean(DEVT))+ "\t  "+ Double.toString(S.mean(DEVU))+ "\t\t" +String.format( "%.2f",S.mean(days[2]));
+		//		System.out.println(output);
+		//		output="SHSR   "+ Double.toString(S.mean(WorkOrder[3]))+ "\t" + String.format( "%.2f",S.stv(SR))+"\t"+ Double.toString(S.mean(SRC))+ "\t  " 
+		//				+ Double.toString(S.mean(SRS))+ "\t  " + Double.toString(S.mean(SRT))+ "\t  " + Double.toString(S.mean(SRU))+ "\t\t" +String.format( "%.2f",S.mean(days[3]));
+		//		System.out.println(output);
+		//		output="SHMTR  "+ Double.toString(S.mean(WorkOrder[4]))+ "\t" + String.format( "%.2f",S.stv(MTR))+"\t"+ Double.toString(S.mean(MTRC))+ "\t  "
+		//				+ Double.toString(S.mean(MTRS))+ "\t  " + Double.toString(S.mean(MTRT))+ "\t  " + Double.toString(S.mean(MTRU))+ "\t\t" +String.format( "%.2f",S.mean(days[4]));
+		//		System.out.println(output);
+		//		output="SHINV  "+ Double.toString(S.mean(WorkOrder[5]))+ "\t" + String.format( "%.2f",S.stv(INV))+"\t"+ Double.toString(S.mean(INVC))+ "\t  "
+		//				+ Double.toString(S.mean(INVS))+ "\t  "+ Double.toString(S.mean(INVT))+ "\t  "+ Double.toString(S.mean(INVU))+ "\t\t" +String.format( "%.2f",S.mean(days[5]));
+		//		System.out.println(output);
+		//		output="Total "+ Double.toString(S.mean(WorkOrder[6]))+ "\t" + String.format( "%.2f",S.stv(Total))+"\t"+ Double.toString(S.mean(TotalC))+ "\t  " 
+		//				+ Double.toString(S.mean(TotalS))+ "\t  " + Double.toString(S.mean(TotalT))+ "\t  " + Double.toString(S.mean(TotalU))+ "\t\t" +String.format( "%.2f",S.mean(days[6]));
+		//		System.out.println(output);
 	}
 
+	private String output() {
+		String output=" Type "+" imput"+" input STD"+" Completed"+ " Shut-off" +" Tested"+" Unfinished"+" avg finish time\n";
+		for(int h=0; h<7;h++) {
+			output+=type[h]+ Double.toString(S.mean(WorkOrder[h]))+ "\t" + String.format( "%.2f",S.stv(WorkOrder[h]))+"\t"+ Double.toString(S.mean(Complete[h]))+"\t  " 
+					+  Double.toString(S.mean(Shut[h]))+ "\t  " + Double.toString(S.mean(Test[h]))+ "\t  " + Double.toString(S.mean(Unfinished[h]))+ "\t\t" +String.format( "%.2f",S.mean(days[h]))+"\n";
+		}
+		return output;
+	}
+	
 	public void Backlog() throws IOException {
 		FileWriter FW2 = new FileWriter("Delay.csv");
 		for(int i=0;i<avgDelay.length;i++) {
