@@ -2,7 +2,7 @@ package simulation;
 import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -10,23 +10,25 @@ public class Current {
 	Boolean Demo = true;//trigger of Demo mode.
 	int replication;//Number of replications.
 	int x=0,c=3;int count=0;
-	int crewNum=8,DayCrew=6,Evening=1,Night=1;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	WorkOrder[] wo;Integer[] queue;int[] Queue;
 	List<Integer> queueCount = new ArrayList<Integer>();
 	Engineer E = new Engineer(1, "Kens", null);
 	Foreman F= new Foreman(2,"Andre",E);
+	int crewNum=8,DayCrew=6,Evening=1,Night=1;//crew staffing
 
 	@SuppressWarnings("deprecation")
-	public void run() throws IOException, CloneNotSupportedException {
+	public void run(int duration) throws IOException, CloneNotSupportedException {
 		WOgen g = new WOgen();
 		g.setUp();//generate WO for entire year
 		this.wo=g.Output();
 		Date d = new Date(117,9,1);//Start date
-		Date end = new Date(118,8,30);//End date
+		
+		Date end = new Date(117,9,1);//End date
+		end.setDate(duration);
 		while(d.compareTo(end)<0) {
 			if(d.getDay()!=6 && d.getDay()!=0) {
-				count=0;
+				count=0;// reset queue number
 			}
 			Day(d);
 			Evening(d);
@@ -34,7 +36,7 @@ public class Current {
 			for(int i=0;i<wo.length;i++) {
 				if( wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()!=Status.COMP) {//find unfinished order
 					wo[i].updateNext(1);
-					count++;
+					count++;//counting  backlog
 				}	
 			}
 			queueCount.add(count);
@@ -64,7 +66,7 @@ public class Current {
 			else if(wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()!=Status.COMP & wo[i].getStatus()!=Status.PENDING) {
 				WO.add(wo[i]);
 			}
-			else if(wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()==Status.PENDING & wo[i].getTypes()==Types.SHINV) {
+			else if(wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()==Status.PENDING & wo[i].getTypes()==Types.SHMTR) {
 				F.inquiry(wo[i]);
 			}
 		}
