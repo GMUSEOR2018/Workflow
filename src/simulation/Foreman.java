@@ -31,7 +31,8 @@ public class Foreman extends Employee {
 		int i=0;
 		for(int j=0;j<Crews.length;j++) {
 			double time=0,t=0;
-			time =Distributions.exponential(1)*2;//break time
+			time =Distributions.Triangular(0.667, 1, 1.5)+Distributions.Triangular(0.5, 0.75, 1)
+				+Distributions.Triangular(0.0833, 0.333, 1);//Time waiting for assignment + break time+ travel time 
 			while(time<=8 & i<Wo.length) {
 				temp=Wo[i];
 				temp.Clone(Wo[i]);

@@ -35,28 +35,28 @@ public class Crew {
 		WO.updateLast();
 		WO.updateNext(1);
 		WO.updateStatus(Status.APPR);
-		double duration=Distributions.exponential(1)+ Distributions.Triangular(0.083, 0.33, 1);//Assessment time + travel time
+		double duration=Distributions.Triangular(0.5, 1, 2)+ Distributions.Triangular(0.0833, 0.333, 1);//Assessment time + travel time
 		return duration;
 	}
 	//Crew man send notification to customer
 	protected  double Notify(WorkOrder WO) {
 		if(WO.getStatus()==Status.TESTCOMP) {//notify for shut-off
-			WO.schedule(2);//TODO check how many days in advance
+			WO.schedule(2);
 		}
 		else {//notify for testing
 			WO.updateStatus(Status.TESTING);
 			WO.updateLast();
-			WO.updateNext(2);//TODO check how many days in advance
+			WO.updateNext(2);
 		}
-		double duration=Distributions.exponential(0.5)+ Distributions.Triangular(0.083, 0.33, 1);//Notify time + travel time
+		double duration=Distributions.Triangular(1, 1.5, 3)+ Distributions.Triangular(0.0833, 0.333, 1);//Notify time + travel time
 		return duration;
 	}
 
 	// crew man testing valves
 	protected double TestShut(WorkOrder WO){
-		int comfirm=(int) Math.round(Distributions.exponential(0.5));
+		int comfirm=(int) Math.round(Distributions.exponential(0.6667));
 		WO.test(comfirm);
-		double duration=Distributions.Triangular(1, 2, 4)+ Distributions.Triangular(0.083, 0.33, 1);//Testing time + travel time;
+		double duration=Distributions.Triangular(1, 2, 4)+ Distributions.Triangular(0.0833, 0.333, 1);//Testing time + travel time;
 		return duration;
 	}
 
@@ -66,14 +66,14 @@ public class Crew {
 			WO.shut(0);//evening crew may able to recharge it.
 		}
 		WO.shut(1);//check time
-		double duration=Distributions.Triangular(1, 2, 4)+ Distributions.Triangular(0.083, 0.33, 1);//shut-off time + travel time;
+		double duration=Distributions.Triangular(0.5, 0.667, 1)+ Distributions.Triangular(0.0833, 0.333, 1);//shut-off time + travel time;
 		return duration;
 	}
 
 	//Recharges 
 	protected double Recharge(WorkOrder WO) {
 		WO.Finsih();//TODO update the finished time.
-		double duration=Distributions.exponential(1)+ Distributions.Triangular(0.083, 0.33, 1);//shut-off time + travel time;
+		double duration=Distributions.Triangular(0.5, 0.667, 1)+ Distributions.Triangular(0.0833, 0.333, 1);//shut-off time + travel time;
 		return duration;
 	}
 
