@@ -8,6 +8,7 @@ import org.apache.commons.math3.distribution.TriangularDistribution;
 
 public class Distributions {
 	static Random rd = new Random();
+
 	//Beta distribution   
 	public static double Beta(double alpha, double beta) {
 		double u= Math.random();
@@ -15,9 +16,6 @@ public class Distributions {
 		return B.inverseCumulativeProbability(u);
 	} 
 
-	/*public static double exponential(double mean) {
-	      return (-1.0*mean)*Math.log(Math.random()); //Mean = a / lambda
-	   }*/
 	//Expo distribution
 	public static double exponential(double mean) {
 		double u= Math.random();
@@ -30,16 +28,14 @@ public class Distributions {
 		return P.sample();
 	}
 
-	
 	public static double Triangular(double a, double c, double b) {
 		double u= Math.random();
 		TriangularDistribution t= new TriangularDistribution( a, c, b);
 		return t.inverseCumulativeProbability(u);
 	}
-	
+
 	//Computes normal distribution
 	public static double normalDist(double mean, double stdev) {
 		return rd.nextGaussian()*stdev+mean; 
 	}
-
 }
