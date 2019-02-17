@@ -40,10 +40,14 @@ public class Run {
 	}
 
 	private void sim() throws IOException, CloneNotSupportedException {
-		if(Demo) {
+		if(Demo) {		
+			delay=new int[1][];WorkOrders= new WorkOrder[1][];
 			Current c= new Current();
 			c.run(duration);
+			WorkOrders[0]=c.Output();
+			delay[0]=c.Delay();
 			c.toExcel();
+			results(WorkOrders);
 		}
 		else {
 			delay=new int[replication][];
