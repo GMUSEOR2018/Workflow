@@ -8,7 +8,6 @@ public class WorkOrder {
 	private Location Location;
 	private boolean plan;
 	private Date Report, Schedule,Finish, Test, Shut, Last, next;
-
 	Date ASSIGN = new Date(117,9,1);
 	//Constructor
 	@SuppressWarnings("deprecation")
@@ -34,6 +33,15 @@ public class WorkOrder {
 				updateStatus(simulation.Status.PENDING);
 			}
 			else updateStatus(simulation.Status.PLANCOMP);
+		}
+		int day=next.getDate()+d;
+		Date Temp=(Date) next.clone();
+		Temp.setDate(day);
+		if (Temp.getDay()==0){//void Saturday
+			d+=2;
+		}
+		else if (Temp.getDay()==6) {//void Sunday	
+			d+=3;
 		}
 		updateNext(d);
 	}
