@@ -20,9 +20,10 @@ public class Run {
 	int[][] Unfinished = new int[7][replication];
 	double[][] avgDays= new double[7][replication];	
 	double[][] stdDays= new double[7][replication];
-	double[][] minDays= new double[7][replication];
-	double[][] maxDays= new double[7][replication];
+	int[][] minDays= new int[7][replication];
+	int[][] maxDays= new int[7][replication];
 	double[][] medianDays= new double[7][replication];
+	WorkOrder[][] WorkOrders;//Main stream database
 	STAT S= new STAT();
 
 	Run(int r) {
@@ -30,63 +31,27 @@ public class Run {
 		if(r==1) {
 			this.Demo=true;
 		}
+		try {
+			sim();
+		} catch (IOException | CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void sim() throws IOException, CloneNotSupportedException {
+	private void sim() throws IOException, CloneNotSupportedException {
 		if(Demo) {
 			Current c= new Current();
 			c.run(duration);
 			c.toExcel();
 		}
 		else {
-			WorkOrder = new int[7][replication];
-			Complete = new int[7][replication];Unfinished = new int[7][replication];
-			Shut = new int[7][replication];Test = new int[7][replication];
-			avgDays= new double[7][replication];stdDays= new double[7][replication];minDays= new double[7][replication];maxDays= new double[7][replication];
-			medianDays= new double[7][replication];
 			delay=new int[replication][];
-			int[][] result=new int[7][];
+			WorkOrders= new WorkOrder[replication][];
 			for(int y = 0; y<replication;y++) {
 				Current c= new Current();
 				c.run(duration);
-				WorkOrder[] wo=c.Output();			
-				Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};
-				for(int i=0;i<wo.length;i++) {
-					for(int w=0;w<6;w++) {
-						if(wo[i].getTypes()==Type[w]){
-							WorkOrder[w][y]++;
-							if(wo[i].getStatus()==Status.COMP) {
-								Complete[w][y]++;
-							}
-							else if(wo[i].getStatus()==Status.B) {
-								Shut[w][y]++;
-								Unfinished[w][y]++;
-							}
-							else if(wo[i].getStatus()==Status.TESTCOMP) {
-								Test[w][y]++;
-								Unfinished[w][y]++;
-							}
-							else Unfinished[w][y]++;
-						}
-					}
-					WorkOrder[6][y]++;
-				}
-				Complete[6][y]=Complete[0][y]+Complete[1][y]+Complete[2][y]+Complete[3][y]+Complete[4][y]+Complete[5][y];
-				Shut[6][y]=Shut[0][y]+Shut[1][y]+Shut[2][y]+Shut[3][y]+Shut[4][y]+Shut[5][y];
-				Test[6][y]=Test[0][y]+Test[1][y]+Test[2][y]+Test[3][y]+Test[4][y]+Test[5][y];
-				Unfinished[6][y]=WorkOrder[6][y]-Complete[6][y];	
-				for(int z=0; z<7;z++) {
-					result[z]=day(wo, Type[z],Complete[z][y]);
-				}
-				for(int q=0;q<7;q++) {
-					avgDays[q][y]=S.mean(result[q]);
-					stdDays[q][y]=S.stv(result[q]);
-					Arrays.sort(result[q]);
-					minDays[q][y]=result[q][0];
-					maxDays[q][y]=result[q][result[q].length-1];
-					medianDays[q][y]=S.median(result[q]);
-				}
-
+				WorkOrders[y]=c.Output();
 				delay[y]=c.Delay();
 				double x = 100.0*y/replication;
 				if(x%5==0& x!=0) {
@@ -95,9 +60,57 @@ public class Run {
 				}
 			}
 			System.out.println("100 % complete\n");
-			System.out.print(output());
+			results(WorkOrders);
 		}
 	}
+
+	private void results(WorkOrder[][] wo) {
+			WorkOrder = new int[7][replication];
+			Complete = new int[7][replication];Unfinished = new int[7][replication];
+			Shut = new int[7][replication];Test = new int[7][replication];
+			avgDays= new double[7][replication];stdDays= new double[7][replication];minDays= new int[7][replication];maxDays= new int[7][replication];
+			medianDays= new double[7][replication];	
+			int[][] result=new int[7][];
+			Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};
+			for(int h=0;h<wo.length;h++) {
+				for(int i=0;i<wo[h].length;i++) {
+					for(int w=0;w<6;w++) {
+						if(wo[h][i].getTypes()==Type[w]){
+							WorkOrder[w][h]++;
+							if(wo[h][i].getStatus()==Status.COMP) {
+								Complete[w][h]++;
+							}
+							else if(wo[h][i].getStatus()==Status.B) {
+								Shut[w][h]++;
+								Unfinished[w][h]++;
+							}
+							else if(wo[h][i].getStatus()==Status.TESTCOMP) {
+								Test[w][h]++;
+								Unfinished[w][h]++;
+							}
+							else Unfinished[w][h]++;
+						}
+					}
+					WorkOrder[6][h]++;
+				}
+				Complete[6][h]=Complete[0][h]+Complete[1][h]+Complete[2][h]+Complete[3][h]+Complete[4][h]+Complete[5][h];
+				Shut[6][h]=Shut[0][h]+Shut[1][h]+Shut[2][h]+Shut[3][h]+Shut[4][h]+Shut[5][h];
+				Test[6][h]=Test[0][h]+Test[1][h]+Test[2][h]+Test[3][h]+Test[4][h]+Test[5][h];
+				Unfinished[6][h]=WorkOrder[6][h]-Complete[6][h];
+				for(int z=0; z<7;z++) {
+					result[z]=day(wo[h], Type[z],Complete[z][h]);
+				}
+				for(int q=0;q<7;q++) {
+					avgDays[q][h]=S.mean(result[q]);
+					stdDays[q][h]=S.stv(result[q]);
+					minDays[q][h]=S.min(result[q]);
+					maxDays[q][h]=S.max(result[q]);
+					medianDays[q][h]=S.median(result[q]);
+				}
+
+			}
+			System.out.print(output());
+		}
 
 	private String output() {
 		String output=" Type\t"+"input-avg\t"+"input-SD\t"+"Completed-AVG\t"+"Completed-SD\n";
@@ -112,7 +125,7 @@ public class Run {
 		output +="\n Type "+" duration-AVG "+" Duration-SD "+" median-duraion "+" minium-duraion "+" maximun-duration\n";
 		for(int h=0; h<7;h++) {
 			output+=type[h]+ "\t"+ String.format( "%.2f",S.mean(avgDays[h])) + "\t\t" +String.format( "%.2f",S.mean(stdDays[h]))+ "\t\t" +String.format( "%.2f",S.mean(medianDays[h]))+ 
-					"\t\t" +String.format( "%.2f",S.mean(minDays[h]))+ "\t\t" +String.format( "%.2f",S.mean(maxDays[h]))+"\n";
+					"\t\t" +S.min(minDays[h])+ "\t\t" +S.max(maxDays[h])+"\n";
 		}
 		return output;
 	}
@@ -134,6 +147,7 @@ public class Run {
 		FW2.flush();
 		FW2.close();
 	} 
+
 	public void Duration() throws IOException {
 		FileWriter FW2 = new FileWriter("Duration.csv");
 		for(int i=0;i<avgDelay.length;i++) {
@@ -143,6 +157,7 @@ public class Run {
 		FW2.flush();
 		FW2.close();
 	} 
+
 	private int[] day(WorkOrder[] wo, Types t, int Complete) {
 		int[] days=new int[Complete];
 		int f=0;
