@@ -1,5 +1,7 @@
 package simulation;
 
+import java.util.Arrays;
+
 public class STAT {
 
 	protected double mean(int data[]) {// Calculating mean
@@ -31,5 +33,12 @@ public class STAT {
 	protected int median(int data[]) {
 		return data[data.length/2];
 	}
-
+	protected int min(int data[]) {
+		Arrays.sort(data);	
+		return data[0];
+	}
+	protected int max(int data[]) {
+		Arrays.sort(data);	
+		return data[data.length-1];
+	}
 }
