@@ -2,7 +2,7 @@ package simulation;
 import java.sql.Date;
 
 public class WorkOrder {
-	private int ID;
+	private int ID,Delay=0;
 	private Types Type;
 	private Status Status;
 	private Location Location;
@@ -95,6 +95,10 @@ public class WorkOrder {
 		else this.next=(Date)Temp.clone();
 	}
 
+	protected void delay(){//counting for delay
+		Delay++;
+	}
+	
 	protected void Clone(WorkOrder wo1) {//Clone a WO
 		this.ID=wo1.getID();this.Type=wo1.getTypes();this.Location=wo1.getLoation();this.plan=wo1.isPlan();
 		this.Status=wo1.getStatus();this.Report=wo1.getReport(); this.Last=wo1.getLast();

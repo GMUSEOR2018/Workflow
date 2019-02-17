@@ -36,6 +36,7 @@ public class Current {
 			for(int i=0;i<wo.length;i++) {
 				if( wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()!=Status.COMP) {//find unfinished order
 					wo[i].updateNext(1);
+					wo[i].delay();
 					count++;//counting  backlog
 				}	
 			}

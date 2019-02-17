@@ -47,7 +47,7 @@ public class Run {
 			WorkOrders[0]=c.Output();
 			delay[0]=c.Delay();
 			c.toExcel();
-			results(WorkOrders);
+			results();
 		}
 		else {
 			delay=new int[replication][];
@@ -64,59 +64,57 @@ public class Run {
 				}
 			}
 			System.out.println("100 % complete\n");
-			results(WorkOrders);
+		
 		}
 	}
 
-	private void results(WorkOrder[][] wo) {
-			WorkOrder = new int[7][replication];
-			Complete = new int[7][replication];Unfinished = new int[7][replication];
-			Shut = new int[7][replication];Test = new int[7][replication];
-			avgDays= new double[7][replication];stdDays= new double[7][replication];minDays= new int[7][replication];maxDays= new int[7][replication];
-			medianDays= new double[7][replication];	
-			int[][] result=new int[7][];
-			Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};
-			for(int h=0;h<wo.length;h++) {
-				for(int i=0;i<wo[h].length;i++) {
-					for(int w=0;w<6;w++) {
-						if(wo[h][i].getTypes()==Type[w]){
-							WorkOrder[w][h]++;
-							if(wo[h][i].getStatus()==Status.COMP) {
-								Complete[w][h]++;
-							}
-							else if(wo[h][i].getStatus()==Status.B) {
-								Shut[w][h]++;
-								Unfinished[w][h]++;
-							}
-							else if(wo[h][i].getStatus()==Status.TESTCOMP) {
-								Test[w][h]++;
-								Unfinished[w][h]++;
-							}
-							else Unfinished[w][h]++;
+	protected void results() {
+		WorkOrder = new int[7][replication];
+		Complete = new int[7][replication];Unfinished = new int[7][replication];
+		Shut = new int[7][replication];Test = new int[7][replication];
+		avgDays= new double[7][replication];stdDays= new double[7][replication];minDays= new int[7][replication];maxDays= new int[7][replication];
+		medianDays= new double[7][replication];	
+		int[][] result=new int[7][];
+		Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};
+		for(int h=0;h<WorkOrders.length;h++) {
+			for(int i=0;i<WorkOrders[h].length;i++) {
+				for(int w=0;w<6;w++) {
+					if(WorkOrders[h][i].getTypes()==Type[w]){
+						WorkOrder[w][h]++;
+						if(WorkOrders[h][i].getStatus()==Status.COMP) {
+							Complete[w][h]++;
 						}
+						else if(WorkOrders[h][i].getStatus()==Status.B) {
+							Shut[w][h]++;
+							Unfinished[w][h]++;
+						}
+						else if(WorkOrders[h][i].getStatus()==Status.TESTCOMP) {
+							Test[w][h]++;
+							Unfinished[w][h]++;
+						}
+						else Unfinished[w][h]++;
 					}
-					WorkOrder[6][h]++;
 				}
-				Complete[6][h]=Complete[0][h]+Complete[1][h]+Complete[2][h]+Complete[3][h]+Complete[4][h]+Complete[5][h];
-				Shut[6][h]=Shut[0][h]+Shut[1][h]+Shut[2][h]+Shut[3][h]+Shut[4][h]+Shut[5][h];
-				Test[6][h]=Test[0][h]+Test[1][h]+Test[2][h]+Test[3][h]+Test[4][h]+Test[5][h];
-				Unfinished[6][h]=WorkOrder[6][h]-Complete[6][h];
-				for(int z=0; z<7;z++) {
-					result[z]=day(wo[h], Type[z],Complete[z][h]);
-				}
-				for(int q=0;q<7;q++) {
-					avgDays[q][h]=S.mean(result[q]);
-					stdDays[q][h]=S.stv(result[q]);
-					minDays[q][h]=S.min(result[q]);
-					maxDays[q][h]=S.max(result[q]);
-					medianDays[q][h]=S.median(result[q]);
-				}
-
+				WorkOrder[6][h]++;
 			}
-			System.out.print(output());
-		}
+			Complete[6][h]=Complete[0][h]+Complete[1][h]+Complete[2][h]+Complete[3][h]+Complete[4][h]+Complete[5][h];
+			Shut[6][h]=Shut[0][h]+Shut[1][h]+Shut[2][h]+Shut[3][h]+Shut[4][h]+Shut[5][h];
+			Test[6][h]=Test[0][h]+Test[1][h]+Test[2][h]+Test[3][h]+Test[4][h]+Test[5][h];
+			Unfinished[6][h]=WorkOrder[6][h]-Complete[6][h];
+			for(int z=0; z<7;z++) {
+				result[z]=day(WorkOrders[h], Type[z],Complete[z][h]);
+			}
+			for(int q=0;q<7;q++) {
+				avgDays[q][h]=S.mean(result[q]);
+				stdDays[q][h]=S.stv(result[q]);
+				minDays[q][h]=S.min(result[q]);
+				maxDays[q][h]=S.max(result[q]);
+				medianDays[q][h]=S.median(result[q]);
+			}
+		}	
+	}
 
-	private String output() {
+	protected String output() {
 		String output=" Type\t"+"input-avg\t"+"input-SD\t"+"Completed-AVG\t"+"Completed-SD\n";
 		for(int h=0; h<7;h++) {
 			output+=type[h]+ "\t  "+String.format( "%.2f",S.mean(WorkOrder[h]))+ "      " + String.format( "%.2f",S.stv(WorkOrder[h]))+"\t\t"+ String.format( "%.2f",S.mean(Complete[h]))+"\t\t"+ String.format( "%.2f",S.stv(Complete[h]))+"\n";
