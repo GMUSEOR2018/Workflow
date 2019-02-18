@@ -23,7 +23,6 @@ public class Current {
 		g.setUp();//generate WO for entire year
 		this.wo=g.Output();
 		Date d = new Date(117,9,1);//Start date
-		
 		Date end = new Date(117,9,1);//End date
 		end.setDate(duration);
 		while(d.compareTo(end)<0) {
