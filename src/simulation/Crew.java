@@ -5,23 +5,23 @@ public class Crew {
 	Crewman CrewmanA;
 	Crewman CrewmanB;
 	Employee suporisvor;
-	//Constructor for A Crew with two Crewman.
-	public Crew(int CrewID, String nameA, int IDA, String nameB, int IDB, Employee suporisvor) {
+
+	public Crew(int CrewID, String nameA, int IDA, String nameB, int IDB, Employee suporisvor) {	//Constructor for A Crew with two Crewman.
 		this.suporisvor=suporisvor;
 		updateCrew(nameA, IDA, nameB, IDB, CrewID);
 		this.CrewName= "A"+CrewID;
 	}
-	// return crew name
+	
 	private String getCrewName() {
 		return CrewName;
 	}
-	//add crewman to this crew.
-	private void updateCrew(String nameA, int IDA, String nameB, int IDB, int CrewID) {
+	
+	private void updateCrew(String nameA, int IDA, String nameB, int IDB, int CrewID) {//add crewman to this crew.
 		this.CrewmanA=new Crewman(IDA,  nameA,Shift.Day, CrewID,suporisvor);
 		this.CrewmanB=new Crewman(IDB,  nameB,Shift.Day, CrewID, suporisvor);
 	}
-	// return the crewman info AS Array
-	private Crewman[] getCrewman() {
+	
+	private Crewman[] getCrewman() {// return the crewman info AS Array
 		Crewman C[]= {CrewmanA, CrewmanB};
 		return C;
 	}
@@ -32,21 +32,17 @@ public class Crew {
 	}
 
 	protected double Assesment(WorkOrder WO) {
-		WO.updateLast();
-		WO.updateNext(1);
-		WO.updateStatus(Status.APPR);
+		WO.Assesment(1);
 		double duration=Distributions.Triangular(0.5, 1, 2)+ Distributions.Triangular(0.0833, 0.333, 1);//Assessment time + travel time
 		return duration;
 	}
 	//Crew man send notification to customer
 	protected  double Notify(WorkOrder WO) {
 		if(WO.getStatus()==Status.TESTCOMP) {//notify for shut-off
-			WO.schedule(2);
+			WO.Notify2(2);
 		}
 		else {//notify for testing
-			WO.updateStatus(Status.TESTING);
-			WO.updateLast();
-			WO.updateNext(2);
+			WO.Notify1(2);
 		}
 		double duration=Distributions.Triangular(1, 1.5, 3)+ Distributions.Triangular(0.0833, 0.333, 1);//Notify time + travel time
 		return duration;
@@ -63,7 +59,7 @@ public class Crew {
 	// Shut for construction
 	protected double Shut(WorkOrder WO) {
 		if(CrewmanA.Shift==Shift.Day) {
-			WO.shut(0);//evening crew may able to recharge it.
+			WO.shut(0);//evening crew may able to recharges it.
 		}
 		WO.shut(1);//check time
 		double duration=Distributions.Triangular(0.5, 0.667, 1)+ Distributions.Triangular(0.0833, 0.333, 1);//shut-off time + travel time;
@@ -72,7 +68,7 @@ public class Crew {
 
 	//Recharges 
 	protected double Recharge(WorkOrder WO) {
-		WO.Finsih();//TODO update the finished time.
+		WO.Finsih();
 		double duration=Distributions.Triangular(0.5, 0.667, 1)+ Distributions.Triangular(0.0833, 0.333, 1);//shut-off time + travel time;
 		return duration;
 	}
