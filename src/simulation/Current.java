@@ -3,22 +3,21 @@ import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class Current {
 	Boolean Demo = true;//trigger of Demo mode.
 	int replication;//Number of replications.
 	int x=0,c=3;int count=0;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	WorkOrder[] wo;Integer[] queue;int[] Queue;
-	List<Integer> queueCount = new ArrayList<Integer>();
+	//List<Integer> queueCount = new ArrayList<Integer>();
 	Engineer E = new Engineer(1, "Kens", null);
 	Foreman F= new Foreman(2,"Andre",E);
 	int crewNum=8,DayCrew=6,Evening=1,Night=1;//crew staffing
-
+	int[][] backLog = new int[7][];
+	
 	@SuppressWarnings("deprecation")
-	public void run(int duration) throws IOException, CloneNotSupportedException {
+	public void run(int duration) throws CloneNotSupportedException {
+		backLog = new int[7][duration];
 		WOgen g = new WOgen();
 		g.setUp();//generate WO for entire year
 		this.wo=g.Output();
@@ -26,9 +25,6 @@ public class Current {
 		Date end = new Date(117,9,1);//End date
 		end.setDate(duration);
 		while(d.compareTo(end)<0) {
-			if(d.getDay()!=6 && d.getDay()!=0) {
-				count=0;// reset queue number
-			}
 			Day(d);
 			Evening(d);
 			Night(d);
@@ -36,23 +32,34 @@ public class Current {
 				if( wo[i].getNext().compareTo(d)==0 & wo[i].getStatus()!=Status.COMP) {//find unfinished order
 					wo[i].updateNext(1);
 					wo[i].delay();
-					count++;//counting  backlog
+					backLog[6][x]++;
+					if(wo[i].getStatus()==Status.PLANCOMP) {
+						backLog[0][x]++;
+					}
+					else if(wo[i].getStatus()==Status.APPR) {
+						backLog[1][x]++;
+					}
+					else if(wo[i].getStatus()==Status.TESTING) {
+						backLog[2][x]++;
+					}
+					else if(wo[i].getStatus()==Status.TECHCOMP) {
+						backLog[3][x]++;
+					}
+					else if(wo[i].getStatus()==Status.A) {
+						backLog[4][x]++;
+					}
+					else if(wo[i].getStatus()==Status.B) {
+						backLog[5][x]++;
+					}
 				}	
 			}
-			queueCount.add(count);
 			x +=1;
 			d=  new Date(117,9,1);
 			d.setDate(x);
 		}
-		queue =queueCount.toArray(new Integer[queueCount.size()]);
-		Queue =new int[queue.length];
-		for (int i = 0; i < queue.length; i++) {
-		    Queue[i] = queueCount.get(i);
-		}
-		queueCount.clear();
 	}
 
-	public void Day(Date d) throws IOException, CloneNotSupportedException {//day crew operation
+	public void Day(Date d) throws CloneNotSupportedException {//day crew operation
 		Crew[] crews = new Crew[DayCrew];
 		for(int i=0;i<DayCrew;i++){
 			crews[i]= new Crew(i, Integer.toString(c),c,Integer.toString(c+1),c+1,F);
@@ -77,7 +84,7 @@ public class Current {
 		WO.clear();
 	}
 
-	public void Evening(Date d) throws IOException, CloneNotSupportedException {//Evening crew operation
+	public void Evening(Date d) throws CloneNotSupportedException {//Evening crew operation
 		Crew[] crews = new Crew[Evening];
 		int x=0;
 		for(int i=DayCrew;i<DayCrew+Evening;i++){
@@ -105,7 +112,7 @@ public class Current {
 		WO.clear();
 	}
 
-	public void Night(Date d) throws IOException, CloneNotSupportedException {//Night crew operation
+	public void Night(Date d) throws CloneNotSupportedException {//Night crew operation
 		Crew[] crews = new Crew[Night];
 		int x=0;
 		for(int i=DayCrew+Evening;i<crewNum;i++){
@@ -136,18 +143,8 @@ public class Current {
 	public  WorkOrder[] Output() {
 		return wo;
 	}
-	
-	public void toExcel() throws IOException {
-		FileWriter FW2 = new FileWriter("WorkOrder.csv");
-		FW2.write("Work Order,Location,Status, Reported Date, Work Type,Priority,Test,Scheduled Start,Shut,Actual Finish,Crew,Last,Next\n");
-		for(int i=0;i<wo.length;i++) {
-			FW2.write(wo[i].toString());
-		}
-		FW2.flush();
-		FW2.close();
-	} 
 
-	protected int[] Delay(){
-		return Queue;
+	protected int[][] Delay(){
+		return backLog;
 	} 
 }
