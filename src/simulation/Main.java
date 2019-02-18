@@ -9,18 +9,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Main {
 	public static void main(String[] args) throws IOException, CloneNotSupportedException {
-		int replication=100; boolean output=false;
+		int replication=10;//Number of run
+		boolean output=false;
 		long t = System.currentTimeMillis(); // start time record.
 		System.out.println("Start!");
 		Run r =new Run(replication);
 		r.results();
 		r.Backlog();
-		System.out.print(r.ToSring());
+		r.DailyReport();
 		System.out.print("\n"+replication+" runs done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.\n");
+		System.out.print(r.ToSring());	
 		if(output){
 			toExcel(r.output());
 		}
-		System.out.print("\n ouptut done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.\n");
+		System.out.print("\nOuptut done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.\n");
 	}
 	private static void toExcel(WorkOrder[][] wo) throws IOException {
 		String[]  columns= {"Work Order","Status", "Reported Date", "Work Type","Test Date","Shut Date","Actual Finish","Last Date","Next Date"};
