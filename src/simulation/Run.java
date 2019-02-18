@@ -1,17 +1,15 @@
 package simulation;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class Run {
 	Boolean Demo =false ;//trigger of Demo mode.//false
 	int replication;//Number of replications.
 	int duration=365;// for setting date range
-	double[] avgDelay;
-	int[][] delay;
-
+	double[][] avgDelay;
 	String[] type ={"SHCIP","SHENG","SHDEV","SHSR","SHMTR","SHINV","Total"};
 	int[][] WorkOrder = new int[7][replication];
 	int[][] Complete = new int[7][replication];
@@ -23,39 +21,33 @@ public class Run {
 	int[][] minDays= new int[7][replication];
 	int[][] maxDays= new int[7][replication];
 	double[][] medianDays= new double[7][replication];
+	int[][][] backlogs = new int [replication][7][duration];
 	WorkOrder[][] WorkOrders;//Main stream database
 	STAT S= new STAT();
 
-	Run(int r) {
+	Run(int r) throws CloneNotSupportedException {
 		this.replication=r;
 		if(r==1) {
 			this.Demo=true;
 		}
-		try {
-			sim();
-		} catch (IOException | CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sim();
 	}
 
-	private void sim() throws IOException, CloneNotSupportedException {
+	private void sim() throws CloneNotSupportedException {
 		if(Demo) {		
-			delay=new int[1][];WorkOrders= new WorkOrder[1][];
 			Current c= new Current();
 			c.run(duration);
 			WorkOrders[0]=c.Output();
-			delay[0]=c.Delay();
-			c.toExcel();
+			backlogs[0]=c.Delay();
 		}
 		else {
-			delay=new int[replication][];
+			backlogs = new int [replication][7][];
 			WorkOrders= new WorkOrder[replication][];
 			for(int y = 0; y<replication;y++) {
 				Current c= new Current();
 				c.run(duration);
 				WorkOrders[y]=c.Output();
-				delay[y]=c.Delay();
+				backlogs[y]=c.Delay();
 				double x = 100.0*y/replication;
 				if(x%5==0& x!=0) {
 					String xstr = String.format("%3.3g", x);
@@ -69,6 +61,7 @@ public class Run {
 	protected WorkOrder[][] output() {
 		return WorkOrders;
 	}
+
 	protected void results() {
 		WorkOrder = new int[7][replication];
 		Complete = new int[7][replication];Unfinished = new int[7][replication];
@@ -133,29 +126,38 @@ public class Run {
 		return output;
 	}
 
-	public void Backlog() throws IOException {
-		avgDelay= new double[delay[0].length];
-		int[] temp=new int[delay.length];
-		for(int f=0; f<delay[0].length;f++) {
-			for(int d=0;d<delay.length;d++) {
-				temp[d]=delay[d][f];
+	protected void Backlog() throws IOException {
+		String output;
+		avgDelay= new double[7][backlogs[0][0].length];
+		double[][] minDelay= new double[7][backlogs[0][0].length];
+		double[][] maxDelay= new double[7][backlogs[0][0].length];
+		int[][] temp=new int[backlogs[0][0].length][backlogs.length];
+		for(int f=0; f<backlogs[0].length;f++) {//types
+			for(int d=0;d<backlogs[0][f].length;d++) {//duration
+				for(int n=0;n<backlogs.length;n++) {//replication
+					temp[d][n]=backlogs[n][f][d];
+				}	
+				avgDelay[f][d]=S.mean(temp[d]);	
+				minDelay[f][d]=S.min(temp[d]);
+				maxDelay[f][d]=S.max(temp[d]);	
 			}
-			avgDelay[f]=S.mean(temp);	
 		}
 		FileWriter FW2 = new FileWriter("Delay.csv");
-		for(int i=0;i<avgDelay.length;i++) {
+		output= "Date,avg-Assessment,min-Assessment,max-Assessment";
+		output+=",avg-notify1,min-notify1,max-notify1";
+		output+=",avg-test,min-test,max-test";
+		output+=",avg-Notify2,min-Notify2,max-Notify2";
+		output+=",avg-shut,min-shut,max-shut";
+		output+=",avg-recharge,min-recharge,max-recharge";
+		output+=",avg-total,min-total,max-total";
+		FW2.write(output+ "\n");
+		for(int i=0;i<avgDelay[0].length;i++) {
 			int day=i+1;
-			FW2.write(day+","+ String.format( "%.2f",avgDelay[i])+"\n");
-		}
-		FW2.flush();
-		FW2.close();
-	} 
-
-	public void Duration() throws IOException {
-		FileWriter FW2 = new FileWriter("Duration.csv");
-		for(int i=0;i<avgDelay.length;i++) {
-			int day=i+1;
-			FW2.write(day+","+ String.format( "%.2f",avgDelay[i])+"\n");
+			output=String.valueOf(day);
+			for(int k=0;k<avgDelay.length;k++) {
+				output+=","+String.format( "%.2f",avgDelay[k][i])+","+String.format( "%.2f",minDelay[k][i])+","+String.format( "%.2f",maxDelay[k][i]);
+			}
+			FW2.write(output+ "\n");
 		}
 		FW2.flush();
 		FW2.close();
@@ -187,5 +189,71 @@ public class Run {
 			}
 		}
 		return days;
+	}
+
+	protected void DailyReport() throws IOException {
+		int x=0;
+		String output;
+		int[][][] Daily=new int[duration][7][WorkOrders.length];
+		double[][][] Summary= new double[duration][7][3];
+		Date d = new Date(117,9,1);//Start date
+		Date end = new Date(117,9,1);//End date
+		end.setDate(duration);
+		while(d.compareTo(end)<0) {
+			for(int l=0;l<WorkOrders.length;l++) {			
+				for(int u=0;u<WorkOrders[l].length;u++) {	
+					if(WorkOrders[l][u].getReport().compareTo(d)==0) {
+						Daily[x][0][l]++;
+					}
+					else if(WorkOrders[l][u].getAssesement().compareTo(d)==0) {
+						Daily[x][1][l]++;
+					}
+					else if(WorkOrders[l][u].getNotify1().compareTo(d)==0) {
+						Daily[x][2][l]++;
+					}
+					else if(WorkOrders[l][u].getTest().compareTo(d)==0) {
+						Daily[x][3][l]++;
+					}
+					else if(WorkOrders[l][u].getNotify2().compareTo(d)==0) {
+						Daily[x][4][l]++;
+					}
+					else if(WorkOrders[l][u].getShut().compareTo(d)==0) {
+						Daily[x][5][l]++;
+					}
+					else if(WorkOrders[l][u].getFinish().compareTo(d)==0) {
+						Daily[x][6][l]++;
+					}				
+				}
+			}
+			x +=1;
+			d=  new Date(117,9,1);
+			d.setDate(x);
+		}
+		for(int t=0;t<Daily.length;t++) {
+			for(int c=0;c<Daily[t].length;c++) {
+				Summary[t][c][0]=S.mean(Daily[t][c]);
+				Summary[t][c][1]=S.min(Daily[t][c]);
+				Summary[t][c][2]=S.max(Daily[t][c]);
+			}
+		}
+		FileWriter FW3 = new FileWriter("DailyReport.csv");
+		output="Date,avg-In,min-In,max-In";
+		output+=",avg-Assessment,min-Assessment,max-Assessment";
+		output+=",avg-Notify1,min-Notify1,max-Notify1";
+		output+=",avg-Test,min-Test,max-Test";
+		output+=",avg-Notify2,min-Notify2,max-Notify2";
+		output+=",avg-Shut,min-Shut,max-Shut";
+		output+=",avg-Recharge,min-Recharge,max-Recharge";
+		FW3.write(output+ "\n");
+		for(int i=0;i<Summary.length;i++) {
+			int day=i+1;
+			output=String.valueOf(day);
+			for(int k=0;k<Summary[i].length;k++) {
+				output+=","+String.format( "%.2f",Summary[i][k][0])+","+String.format( "%.2f",Summary[i][k][1])+","+String.format( "%.2f",Summary[i][k][2]);
+			}
+			FW3.write(output+ "\n");
+		}
+		FW3.flush();
+		FW3.close();
 	}
 }
