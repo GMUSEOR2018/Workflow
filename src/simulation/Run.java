@@ -47,7 +47,6 @@ public class Run {
 			WorkOrders[0]=c.Output();
 			delay[0]=c.Delay();
 			c.toExcel();
-			results();
 		}
 		else {
 			delay=new int[replication][];
@@ -64,10 +63,12 @@ public class Run {
 				}
 			}
 			System.out.println("100 % complete\n");
-		
 		}
 	}
 
+	protected WorkOrder[][] output() {
+		return WorkOrders;
+	}
 	protected void results() {
 		WorkOrder = new int[7][replication];
 		Complete = new int[7][replication];Unfinished = new int[7][replication];
@@ -114,7 +115,7 @@ public class Run {
 		}	
 	}
 
-	protected String output() {
+	protected String ToSring() {
 		String output=" Type\t"+"input-avg\t"+"input-SD\t"+"Completed-AVG\t"+"Completed-SD\n";
 		for(int h=0; h<7;h++) {
 			output+=type[h]+ "\t  "+String.format( "%.2f",S.mean(WorkOrder[h]))+ "      " + String.format( "%.2f",S.stv(WorkOrder[h]))+"\t\t"+ String.format( "%.2f",S.mean(Complete[h]))+"\t\t"+ String.format( "%.2f",S.stv(Complete[h]))+"\n";
