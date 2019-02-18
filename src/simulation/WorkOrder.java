@@ -2,17 +2,18 @@ package simulation;
 import java.sql.Date;
 
 public class WorkOrder {
-	private int ID,Delay=0;
+	private int ID, Delay;
 	private Types Type;
 	private Status Status;
 	private Location Location;
 	private boolean plan;
-	private Date Report, Schedule,Finish, Test, Shut, Last, next;
+	private Date Report, Assesment, Notify1, Notify2,Finish, Test, Shut, Last, next;
 	Date ASSIGN = new Date(117,9,1);
 	//Constructor
 	@SuppressWarnings("deprecation")
 	public WorkOrder(int id, Types t, Location l,int d, boolean P ) {
 		this.ID=id;this.Type=t;this.Location=l;this.plan=P;
+		//this.Delay=0;
 		this.Status= simulation.Status.WAPPR;
 		if (d!=0) {//check for valid date
 			ASSIGN.setDate(d);
@@ -20,7 +21,8 @@ public class WorkOrder {
 		this.Report=(Date) ASSIGN.clone(); 
 		this.Last=(Date) this.ASSIGN.clone();
 		this.next=(Date) this.ASSIGN.clone();
-		this.Schedule=null;this.Finish=null;this.Test=null;this.Shut=null;
+		this.Notify2= new Date(117,8,1);this.Assesment=new Date(117,8,1);this.Notify1=new Date(117,8,1);
+		this.Finish=new Date(117,8,1);this.Test=new Date(117,8,1);;this.Shut=new Date(117,8,1);;
 	}
 
 	protected void setPlan(int d) {
@@ -45,6 +47,20 @@ public class WorkOrder {
 		}
 		updateNext(d);
 	}
+	
+	protected void Assesment(int d) {
+		updateStatus(simulation.Status.APPR);
+		this.Assesment=(Date) this.next.clone();
+		updateLast();
+		updateNext(d);	
+	}
+	
+	protected void Notify1(int d) {
+		updateStatus(simulation.Status.TESTING);
+		this.Notify1=(Date) this.next.clone();
+		updateLast();
+		updateNext(d);
+	}
 
 	protected void test(int d) {
 		updateStatus(simulation.Status.TESTCOMP);
@@ -54,9 +70,9 @@ public class WorkOrder {
 		this.plan=false;
 	}
 
-	protected void schedule(int d) {
+	protected void Notify2(int d) {
 		updateStatus(simulation.Status.A);//TODO change name of this new Status
-		this.Schedule=(Date) this.next.clone();
+		this.Notify2=(Date) this.next.clone();
 		updateLast();
 		updateNext(d);
 	}
@@ -102,22 +118,37 @@ public class WorkOrder {
 	protected void Clone(WorkOrder wo1) {//Clone a WO
 		this.ID=wo1.getID();this.Type=wo1.getTypes();this.Location=wo1.getLoation();this.plan=wo1.isPlan();
 		this.Status=wo1.getStatus();this.Report=wo1.getReport(); this.Last=wo1.getLast();
-		this.Schedule=wo1.getSchedule();this.Finish=wo1.getFinish();this.Test=wo1.getTest();
+		this.Notify2=wo1.getNotify2();this.Finish=wo1.getFinish();this.Test=wo1.getTest();
 		this.Shut=wo1.getShut();this.next=wo1.getNext();
 	}
 
 	//return Work order info
 	protected int getID() {return this.ID;}
+	
 	protected Types getTypes() {return this.Type;}
+	
 	protected Location getLoation() {return this.Location;}
+	
 	protected Status getStatus() {return this.Status;}
+	
 	protected boolean isPlan() {return this.plan;}
+	
 	protected Date getReport() {return this.Report;}
-	protected Date getSchedule() {return this.Schedule;}
+	
+	protected Date getAssesement() {return this.Assesment;}
+	
+	protected Date getNotify1() {return this.Notify1;}
+	
+	protected Date getNotify2() {return this.Notify2;}
+	
 	protected Date getFinish() {return this.Finish;}
+	
 	protected Date getLast() {return this.Last;}
+	
 	protected Date getNext() {return this.next;}
+	
 	protected Date getShut() {return this.Shut;}
+	
 	protected Date getTest() {return this.Test;}
 
 	public  String toString() {
@@ -136,11 +167,11 @@ public class WorkOrder {
 		else {
 			finish = this.Finish.toString();
 		}
-		if(this.Schedule==null){
+		if(this.Notify2==null){
 			schedule=" ";
 		}
 		else {
-			schedule = this.Schedule.toString();
+			schedule = this.Notify2.toString();
 		}
 		if(this.Test==null){
 			test=" ";
@@ -156,7 +187,6 @@ public class WorkOrder {
 		}
 		String S= ID+"," + Location.toString()+ ","+ Status.toString()+","+ report+ 
 				"," +Type.toString()+ ","+","+test+","+schedule+","+shut+","+finish+","+","+Last+","+Next+"\n";
-
 		return S;
 	}
 }
