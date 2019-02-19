@@ -22,7 +22,7 @@ public class Run {
 	int[][] maxDays= new int[7][replication];
 	double[][] medianDays= new double[7][replication];
 	int[][][] backlogs = new int [replication][7][duration];
-	WorkOrder[][] WorkOrders;//Main stream database
+	WorkOrder[][] WorkOrders;//Main stream work order storage
 	STAT S= new STAT();
 
 	Run(int r) throws CloneNotSupportedException {
@@ -66,7 +66,8 @@ public class Run {
 		WorkOrder = new int[7][replication];
 		Complete = new int[7][replication];Unfinished = new int[7][replication];
 		Shut = new int[7][replication];Test = new int[7][replication];
-		avgDays= new double[7][replication];stdDays= new double[7][replication];minDays= new int[7][replication];maxDays= new int[7][replication];
+		avgDays= new double[7][replication];stdDays= new double[7][replication];
+		minDays= new int[7][replication];maxDays= new int[7][replication];
 		medianDays= new double[7][replication];	
 		int[][] result=new int[7][];
 		Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};

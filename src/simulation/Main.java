@@ -9,16 +9,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Main {
 	public static void main(String[] args) throws IOException, CloneNotSupportedException {
-		int replication=10000;//Number of run
+		int replication=1000;//Number of run
 		boolean output=false;
 		long t = System.currentTimeMillis(); // start time record.
 		System.out.println("Start!");
 		Run r =new Run(replication);
+		System.out.println(replication+" runs done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.\n");
 		r.results();
+		System.out.print(r.ToSring());			
 		r.Backlog();
 		r.DailyReport();
-		System.out.println(replication+" runs done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.\n");
-		System.out.print(r.ToSring());	
 		if(output){
 			toExcel(r.output());
 		}

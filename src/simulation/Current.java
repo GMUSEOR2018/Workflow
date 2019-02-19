@@ -9,7 +9,6 @@ public class Current {
 	int x=0,c=3;int count=0;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	WorkOrder[] wo;Integer[] queue;int[] Queue;
-	//List<Integer> queueCount = new ArrayList<Integer>();
 	Engineer E = new Engineer(1, "Kens", null);
 	Foreman F= new Foreman(2,"Andre",E);
 	int crewNum=8,DayCrew=6,Evening=1,Night=1;//crew staffing
