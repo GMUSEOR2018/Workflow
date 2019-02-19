@@ -1,6 +1,7 @@
 package simulation;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -25,7 +26,7 @@ public class Main {
 		System.out.print("\nOuptut done, operation took: " + (1.0*(System.currentTimeMillis()-t)/1000) + " seconds to complete.\n");
 	}
 	private static void toExcel(WorkOrder[][] wo) throws IOException {
-		String[]  columns= {"Work Order","Status", "Reported Date", "Work Type","Test Date","Shut Date","Actual Finish","Last Date","Next Date"};
+		String[]  columns= {"Work Order","Status", "Reported", "Type","Assesment","Notify1","Test","Notify2","Shut","Recharge","Next Date"};
 		Workbook workbook = new XSSFWorkbook(); 
 		CreationHelper createHelper = workbook.getCreationHelper();
 		for(int j=0;j<wo.length;j++) {//read data by runs
@@ -56,7 +57,7 @@ public class Main {
 				Row row = sheet.createRow(rowNum++);
 				row.createCell(0)
 				.setCellValue(wo[j][i].getID());
-				
+
 				row.createCell(1)
 				.setCellValue(wo[j][i].getStatus().toString());
 
@@ -66,24 +67,58 @@ public class Main {
 
 				row.createCell(3)
 				.setCellValue(wo[j][i].getTypes().toString());
-				
-				Cell dateOfTest = row.createCell(4);
-				dateOfTest.setCellValue(wo[j][i].getTest());
-				dateOfTest.setCellStyle(dateCellStyle);
-				
-				Cell dateOfShut = row.createCell(5);
-				dateOfShut.setCellValue(wo[j][i].getShut());
-				dateOfShut.setCellStyle(dateCellStyle);
-				
-				Cell dateOfFinish = row.createCell(6);
-				dateOfFinish.setCellValue(wo[j][i].getFinish());
-				dateOfFinish.setCellStyle(dateCellStyle);
-				
-				Cell dateOflast = row.createCell(7);
-				dateOflast.setCellValue(wo[j][i].getLast());
-				dateOflast.setCellStyle(dateCellStyle);
-				
-				Cell dateOfNext = row.createCell(8);
+
+				Cell dateOfAss = row.createCell(4);
+				if(wo[j][i].getAssesement().compareTo(new Date(117,8,1))==0) {
+					dateOfAss.setCellValue("");
+				}
+				else {
+					dateOfAss.setCellValue(wo[j][i].getAssesement());
+					dateOfAss.setCellStyle(dateCellStyle);
+				}
+				Cell dateOfNotify1 = row.createCell(5);
+				if(wo[j][i].getNotify1().compareTo(new Date(117,8,1))==0) {
+					dateOfNotify1.setCellValue("");
+				}
+				else {
+					dateOfNotify1.setCellValue(wo[j][i].getNotify1());
+					dateOfNotify1.setCellStyle(dateCellStyle);
+				}
+
+				Cell dateOfTest = row.createCell(6);
+				if(wo[j][i].getTest().compareTo(new Date(117,8,1))==0) {
+					dateOfTest.setCellValue("");
+				}
+				else {
+					dateOfTest.setCellValue(wo[j][i].getTest());
+					dateOfTest.setCellStyle(dateCellStyle);
+				}
+
+				Cell dateOfNotify2 = row.createCell(7);
+				if(wo[j][i].getNotify2().compareTo(new Date(117,8,1))==0) {
+					dateOfNotify2.setCellValue("");
+				}
+				else {
+					dateOfNotify2.setCellValue(wo[j][i].getNotify2());
+					dateOfNotify2.setCellStyle(dateCellStyle);
+				}
+
+				Cell dateOfShut = row.createCell(8);
+				if(wo[j][i].getShut().compareTo(new Date(117,8,1))==0) {
+					dateOfShut.setCellValue("");
+				}
+				else{ dateOfShut.setCellValue(wo[j][i].getShut());
+				dateOfShut.setCellStyle(dateCellStyle);}
+
+				Cell dateOfFinish = row.createCell(9);
+				if(wo[j][i].getFinish().compareTo(new Date(117,8,1))==0) {
+					dateOfFinish.setCellValue("");
+				}
+				else {
+					dateOfFinish.setCellValue(wo[j][i].getFinish());
+					dateOfFinish.setCellStyle(dateCellStyle);}
+
+				Cell dateOfNext = row.createCell(10);
 				dateOfNext.setCellValue(wo[j][i].getNext());
 				dateOfNext.setCellStyle(dateCellStyle);
 			}
