@@ -195,8 +195,8 @@ public class Run {
 	protected void DailyReport() throws IOException {
 		int x=0;
 		String output;
-		int[][][] Daily=new int[duration][7][WorkOrders.length];
-		double[][][] Summary= new double[duration][7][3];
+		int[][][] Daily=new int[duration][8][WorkOrders.length];
+		double[][][] Summary= new double[duration][8][3];
 		Date d = new Date(117,9,1);//Start date
 		Date end = new Date(117,9,1);//End date
 		end.setDate(duration);
@@ -223,7 +223,8 @@ public class Run {
 					}
 					else if(WorkOrders[l][u].getFinish().compareTo(d)==0) {
 						Daily[x][6][l]++;
-					}				
+					}
+					Daily[x][7][l]++;
 				}
 			}
 			x +=1;
@@ -245,6 +246,7 @@ public class Run {
 		output+=",avg-Notify2,min-Notify2,max-Notify2";
 		output+=",avg-Shut,min-Shut,max-Shut";
 		output+=",avg-Recharge,min-Recharge,max-Recharge";
+		output+=",avg-Total,min-Total,max-Total";
 		FW3.write(output+ "\n");
 		for(int i=0;i<Summary.length;i++) {
 			int day=i+1;
