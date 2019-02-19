@@ -34,6 +34,8 @@ public class Run {
 	}
 
 	private void sim() throws CloneNotSupportedException {
+		WorkOrders= new WorkOrder[replication][];
+		backlogs = new int [replication][7][];
 		if(Demo) {		
 			Current c= new Current();
 			c.run(duration);
@@ -41,8 +43,6 @@ public class Run {
 			backlogs[0]=c.Delay();
 		}
 		else {
-			backlogs = new int [replication][7][];
-			WorkOrders= new WorkOrder[replication][];
 			for(int y = 0; y<replication;y++) {
 				Current c= new Current();
 				c.run(duration);
