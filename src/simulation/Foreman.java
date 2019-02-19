@@ -30,9 +30,9 @@ public class Foreman extends Employee {
 	private void Schedule() throws CloneNotSupportedException {
 		int i=0;
 		for(int j=0;j<Crews.length;j++) {
-			double time=0,t=0;
+			double time=0,t;
 			time =Distributions.Triangular(0.667, 1, 1.5)+Distributions.Triangular(0.5, 0.75, 1)
-				+Distributions.Triangular(0.0833, 0.333, 1);//Time waiting for assignment + break time+ travel time 
+			+Distributions.Triangular(0.0833, 0.333, 1);//Time waiting for assignment + break time+ travel time 
 			while(time<=8 & i<Wo.length) {
 				temp=Wo[i];
 				temp.Clone(Wo[i]);
@@ -53,9 +53,9 @@ public class Foreman extends Employee {
 				else if(Wo[i].getStatus()==Status.A) {
 					time += Crews[j].Shut(Wo[i]); 
 				}
-				else if(Wo[i].getStatus()==Status.B) {
+				if(Wo[i].getStatus()==Status.B) {
 					time += Crews[j].Recharge(Wo[i]);
-				}
+				}			
 				i++;
 				if(time>8) {
 					i--;

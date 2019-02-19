@@ -61,7 +61,7 @@ public class Crew {
 		if(CrewmanA.Shift==Shift.Day) {
 			WO.shut(0);//evening crew may able to recharges it.
 		}
-		WO.shut(1);//check time
+		else WO.shut(1);//check time
 		double duration=Distributions.Triangular(0.5, 0.667, 1)+ Distributions.Triangular(0.0833, 0.333, 1);//shut-off time + travel time;
 		return duration;
 	}

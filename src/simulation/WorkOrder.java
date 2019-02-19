@@ -79,14 +79,10 @@ public class WorkOrder {
 
 	protected void shut(int d) {
 		updateStatus(simulation.Status.B);
-		if(d==1) {
-			this.Shut=(Date) this.next.clone();
-			updateLast();
-			updateNext(d);
-		}
-		else {
-		this.Shut=(Date) this.next.clone();
 		updateLast();
+		this.Shut=(Date) this.next.clone();
+		if(d==1) {
+			updateNext(d);
 		}
 	}
 
