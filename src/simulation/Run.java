@@ -205,26 +205,32 @@ public class Run {
 				for(int u=0;u<WorkOrders[l].length;u++) {	
 					if(WorkOrders[l][u].getReport().compareTo(d)==0) {
 						Daily[x][0][l]++;
+						Daily[x][7][l]++;
 					}
 					else if(WorkOrders[l][u].getAssesement().compareTo(d)==0) {
 						Daily[x][1][l]++;
+						Daily[x][7][l]++;
 					}
 					else if(WorkOrders[l][u].getNotify1().compareTo(d)==0) {
 						Daily[x][2][l]++;
+						Daily[x][7][l]++;
 					}
 					else if(WorkOrders[l][u].getTest().compareTo(d)==0) {
 						Daily[x][3][l]++;
+						Daily[x][7][l]++;
 					}
 					else if(WorkOrders[l][u].getNotify2().compareTo(d)==0) {
 						Daily[x][4][l]++;
+						Daily[x][7][l]++;
 					}
 					else if(WorkOrders[l][u].getShut().compareTo(d)==0) {
 						Daily[x][5][l]++;
+						Daily[x][7][l]++;
 					}
 					else if(WorkOrders[l][u].getFinish().compareTo(d)==0) {
 						Daily[x][6][l]++;
-					}
-					Daily[x][7][l]++;
+						Daily[x][7][l]++;
+					}		
 				}
 			}
 			x +=1;
