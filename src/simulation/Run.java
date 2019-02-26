@@ -10,6 +10,7 @@ public class Run {
 	int replication;//Number of replications.
 	int duration=365;// for setting date range
 	double[][] avgDelay;
+	double[][] SDDelay;
 	String[] type ={"SHCIP","SHENG","SHDEV","SHSR","SHMTR","SHINV","Total"};
 	int[][] WorkOrder = new int[7][replication];
 	int[][] Complete = new int[7][replication];
@@ -130,6 +131,7 @@ public class Run {
 	protected void Backlog() throws IOException {
 		String output;
 		avgDelay= new double[7][backlogs[0][0].length];
+		SDDelay= new double[7][backlogs[0][0].length];
 		double[][] minDelay= new double[7][backlogs[0][0].length];
 		double[][] maxDelay= new double[7][backlogs[0][0].length];
 		int[][] temp=new int[backlogs[0][0].length][backlogs.length];
@@ -140,23 +142,24 @@ public class Run {
 				}	
 				avgDelay[f][d]=S.mean(temp[d]);	
 				minDelay[f][d]=S.min(temp[d]);
-				maxDelay[f][d]=S.max(temp[d]);	
+				maxDelay[f][d]=S.max(temp[d]);
+				SDDelay[f][d]=S.stv(temp[d]);
 			}
 		}
 		FileWriter FW2 = new FileWriter("Delay.csv");
-		output= "Date,avg-Assessment,min-Assessment,max-Assessment";
-		output+=",avg-notify1,min-notify1,max-notify1";
-		output+=",avg-test,min-test,max-test";
-		output+=",avg-Notify2,min-Notify2,max-Notify2";
-		output+=",avg-shut,min-shut,max-shut";
-		output+=",avg-recharge,min-recharge,max-recharge";
-		output+=",avg-total,min-total,max-total";
+		output= "Date,avg-Assessment,SD-Assessment,min-Assessment,max-Assessment";
+		output+=",avg-notify1,SD-notify1,min-notify1,max-notify1";
+		output+=",avg-test,SD-test,min-test,max-test";
+		output+=",avg-Notify2,SD-Notify2,min-Notify2,max-Notify2";
+		output+=",avg-shut,SD-shut,min-shut,max-shut";
+		output+=",avg-recharge,SD-recharge,min-recharge,max-recharge";
+		output+=",avg-total,SD-total,min-total,max-total";
 		FW2.write(output+ "\n");
 		for(int i=0;i<avgDelay[0].length;i++) {
 			int day=i+1;
 			output=String.valueOf(day);
 			for(int k=0;k<avgDelay.length;k++) {
-				output+=","+String.format( "%.2f",avgDelay[k][i])+","+String.format( "%.2f",minDelay[k][i])+","+String.format( "%.2f",maxDelay[k][i]);
+				output+=","+String.format( "%.2f",avgDelay[k][i])+","+String.format( "%.2f",SDDelay[k][i])+","+String.format( "%.2f",minDelay[k][i])+","+String.format( "%.2f",maxDelay[k][i]);
 			}
 			FW2.write(output+ "\n");
 		}
@@ -196,7 +199,7 @@ public class Run {
 		int x=0;
 		String output;
 		int[][][] Daily=new int[duration][8][WorkOrders.length];
-		double[][][] Summary= new double[duration][8][3];
+		double[][][] Summary= new double[duration][8][4];
 		Date d = new Date(117,9,1);//Start date
 		Date end = new Date(117,9,1);//End date
 		end.setDate(duration);
@@ -240,25 +243,26 @@ public class Run {
 		for(int t=0;t<Daily.length;t++) {
 			for(int c=0;c<Daily[t].length;c++) {
 				Summary[t][c][0]=S.mean(Daily[t][c]);
-				Summary[t][c][1]=S.min(Daily[t][c]);
-				Summary[t][c][2]=S.max(Daily[t][c]);
+				Summary[t][c][1]=S.stv(Daily[t][c]);
+				Summary[t][c][2]=S.min(Daily[t][c]);
+				Summary[t][c][3]=S.max(Daily[t][c]);			
 			}
 		}
 		FileWriter FW3 = new FileWriter("DailyReport.csv");
-		output="Date,avg-In,min-In,max-In";
-		output+=",avg-Assessment,min-Assessment,max-Assessment";
-		output+=",avg-Notify1,min-Notify1,max-Notify1";
-		output+=",avg-Test,min-Test,max-Test";
-		output+=",avg-Notify2,min-Notify2,max-Notify2";
-		output+=",avg-Shut,min-Shut,max-Shut";
-		output+=",avg-Recharge,min-Recharge,max-Recharge";
-		output+=",avg-Total,min-Total,max-Total";
+		output="Date,avg-In,SD-In,min-In,max-In";
+		output+=",avg-Assessment,SD-Assessment,min-Assessment,max-Assessment";
+		output+=",avg-Notify1,SD-Notify1,min-Notify1,max-Notify1";
+		output+=",avg-Test,SD-Test,min-Test,max-Test";
+		output+=",avg-Notify2,SD-Motify2,min-Notify2,max-Notify2";
+		output+=",avg-Shut,SD-Shut,min-Shut,max-Shut";
+		output+=",avg-Recharge,SD-Recharge,min-Recharge,max-Recharge";
+		output+=",avg-Total,SD-Total,min-Total,max-Total";
 		FW3.write(output+ "\n");
 		for(int i=0;i<Summary.length;i++) {
 			int day=i+1;
 			output=String.valueOf(day);
 			for(int k=0;k<Summary[i].length;k++) {
-				output+=","+String.format( "%.2f",Summary[i][k][0])+","+String.format( "%.2f",Summary[i][k][1])+","+String.format( "%.2f",Summary[i][k][2]);
+				output+=","+String.format( "%.2f",Summary[i][k][0])+","+String.format( "%.2f",Summary[i][k][1])+","+String.format( "%.2f",Summary[i][k][2])+","+String.format( "%.2f",Summary[i][k][3]);
 			}
 			FW3.write(output+ "\n");
 		}
