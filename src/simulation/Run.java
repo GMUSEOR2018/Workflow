@@ -63,7 +63,7 @@ public class Run {
 		return WorkOrders;
 	}
 
-	protected void results() {
+	protected void results() throws IOException {
 		WorkOrder = new int[7][replication];
 		Complete = new int[7][replication];Unfinished = new int[7][replication];
 		Shut = new int[7][replication];Test = new int[7][replication];
@@ -71,8 +71,9 @@ public class Run {
 		minDays= new int[7][replication];maxDays= new int[7][replication];
 		medianDays= new double[7][replication];	
 		int[][] result=new int[7][];
+		String output;
 		Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};
-		for(int h=0;h<WorkOrders.length;h++) {
+		for(int h=0;h<WorkOrders.length;h++) {//replication
 			for(int i=0;i<WorkOrders[h].length;i++) {
 				for(int w=0;w<6;w++) {
 					if(WorkOrders[h][i].getTypes()==Type[w]){
@@ -107,7 +108,16 @@ public class Run {
 				maxDays[q][h]=S.max(result[q]);
 				medianDays[q][h]=S.median(result[q]);
 			}
-		}	
+		}
+		FileWriter FW4 = new FileWriter("Run-detail.csv");
+		output="run,In,Completed,Unfinished,duration";
+		FW4.write(output+ "\n");
+		for(int s=0;s<replication;s++) {
+			output=s+1+","+WorkOrder[6][s]+","+Complete[6][s]+","+Unfinished[6][s]+","+avgDays[6][s];
+			FW4.write(output+ "\n");
+		}
+		FW4.flush();
+		FW4.close();
 	}
 
 	protected String ToSring() {
@@ -123,7 +133,7 @@ public class Run {
 		output +="\n Type "+" duration-AVG "+" Duration-SD "+" median-duraion "+" minium-duraion "+" maximun-duration\n";
 		for(int h=0; h<7;h++) {
 			output+=type[h]+ "\t"+ String.format( "%.2f",S.mean(avgDays[h])) + "\t\t" +String.format( "%.2f",S.mean(stdDays[h]))+ "\t\t" +String.format( "%.2f",S.mean(medianDays[h]))+ 
-					"\t\t" +S.min(minDays[h])+ "\t\t" +S.max(maxDays[h])+"\n";
+					"\t\t" +S.min(minDays[h])+ "\t\t" +S.max(maxDays[h])+"\n";//Check STD
 		}
 		return output;
 	}
@@ -204,7 +214,7 @@ public class Run {
 		Date end = new Date(117,9,1);//End date
 		end.setDate(duration);
 		while(d.compareTo(end)<0) {
-			for(int l=0;l<WorkOrders.length;l++) {			
+			for(int l=0;l<WorkOrders.length;l++) {//Replication			
 				for(int u=0;u<WorkOrders[l].length;u++) {	
 					if(WorkOrders[l][u].getReport().compareTo(d)==0) {
 						Daily[x][0][l]++;
