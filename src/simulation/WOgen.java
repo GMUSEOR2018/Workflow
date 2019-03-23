@@ -10,43 +10,45 @@ public class WOgen {
 	int NumCIP,NumDEV,NumENG,NumINV,NumSR,NumMTR;
 	List<WorkOrder> WO =new ArrayList<WorkOrder>();
 	int x =1;//track WO ID
+	int Range;//range need to generate work order
 
-	public void setUp(){
+	public void setUp(int range){
+		this.Range=range;
 		SHCIP=SHCIP();SHENG=SHENG();SHINV=SHINV();SHDEV=SHDEV();SHSR=SHSR();SHMTR=SHMTR();
 
-		while(SHCIP<=365 || SHENG<=365 || SHINV<=365 || SHDEV<=365 || SHSR<=365 || SHMTR<=365) {
-			if(SHCIP<=SHENG & SHCIP<=SHINV & SHCIP<=SHDEV & SHCIP<=SHSR & SHCIP<=SHMTR & SHCIP<=365) {
-				WO.add(new WorkOrder(x,Types.SHCIP,Location.NE,SHCIP, false));
+		while(SHCIP<=Range || SHENG<=Range || SHINV<=Range || SHDEV<=Range || SHSR<=Range || SHMTR<=Range) {
+			if(SHCIP<=SHENG & SHCIP<=SHINV & SHCIP<=SHDEV & SHCIP<=SHSR & SHCIP<=SHMTR & SHCIP<=Range) {
+				WO.add(new WorkOrder(x,Types.SHCIP,SHCIP, false));//,Location.NE
 				x++;
 				SHCIP=SHCIP();
 				NumCIP++;
 			}
-			if(SHENG<=SHCIP & SHENG<=SHINV & SHENG<=SHDEV & SHENG<=SHSR & SHENG<=SHMTR & SHENG<=365) {
-				WO.add(new WorkOrder(x,Types.SHENG,Location.NE,SHENG, false));
+			if(SHENG<=SHCIP & SHENG<=SHINV & SHENG<=SHDEV & SHENG<=SHSR & SHENG<=SHMTR & SHENG<=Range) {
+				WO.add(new WorkOrder(x,Types.SHENG,SHENG, false));//,Location.NE
 				x++;
 				SHENG=SHENG();
 				NumENG++;
 			}
-			if(SHINV<=SHCIP & SHENG>=SHINV & SHINV<=SHDEV & SHINV<=SHSR & SHINV<=SHMTR & SHINV<=365) {
-				WO.add(new WorkOrder(x,Types.SHINV,Location.NE,SHINV, false));
+			if(SHINV<=SHCIP & SHENG>=SHINV & SHINV<=SHDEV & SHINV<=SHSR & SHINV<=SHMTR & SHINV<=Range) {
+				WO.add(new WorkOrder(x,Types.SHINV,SHINV, false));//,Location.NE
 				x++;
 				SHINV=SHINV();
 				NumINV++;
 			}
-			if(SHDEV<=SHCIP & SHDEV<=SHINV & SHENG>=SHDEV & SHDEV<=SHSR & SHDEV<=SHMTR & SHDEV<=365) {
-				WO.add(new WorkOrder(x,Types.SHDEV,Location.NE,SHDEV, false));
+			if(SHDEV<=SHCIP & SHDEV<=SHINV & SHENG>=SHDEV & SHDEV<=SHSR & SHDEV<=SHMTR & SHDEV<=Range) {
+				WO.add(new WorkOrder(x,Types.SHDEV,SHDEV, false));//,Location.NE
 				x++;
 				SHDEV=SHDEV();
 				NumDEV++;
 			}
-			if(SHSR<=SHCIP & SHSR<=SHINV & SHSR<=SHDEV & SHSR<=SHDEV & SHSR<=SHMTR & SHSR<=365) {
-				WO.add(new WorkOrder(x,Types.SHSR,Location.NE,SHSR, false));
+			if(SHSR<=SHCIP & SHSR<=SHINV & SHSR<=SHDEV & SHSR<=SHDEV & SHSR<=SHMTR & SHSR<=Range) {
+				WO.add(new WorkOrder(x,Types.SHSR,SHSR, false));//,Location.NE
 				x++;
 				SHSR=SHSR();
 				NumSR++;
 			}
-			if(SHMTR<=SHCIP & SHMTR<=SHINV & SHMTR<=SHDEV & SHMTR<=SHSR & SHSR>=SHMTR & SHMTR<=365) {
-				WO.add(new WorkOrder(x,Types.SHMTR,Location.NE,SHMTR, false));
+			if(SHMTR<=SHCIP & SHMTR<=SHINV & SHMTR<=SHDEV & SHMTR<=SHSR & SHSR>=SHMTR & SHMTR<=Range) {
+				WO.add(new WorkOrder(x,Types.SHMTR,SHMTR, false));//,Location.NE
 				x++;
 				SHMTR=SHMTR();
 				NumMTR++;
