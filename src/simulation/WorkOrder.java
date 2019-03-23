@@ -5,14 +5,15 @@ public class WorkOrder {
 	private int ID, Delay;
 	private Types Type;
 	private Status Status;
-	private Location Location;
+	//private Location Location;
 	private boolean plan;
 	private Date Report, Assesment, Notify1, Notify2,Finish, Test, Shut, Last, next;
 	Date ASSIGN = new Date(117,9,1);
 	//Constructor
 	@SuppressWarnings("deprecation")
-	public WorkOrder(int id, Types t, Location l,int d, boolean P ) {
-		this.ID=id;this.Type=t;this.Location=l;this.plan=P;
+	public WorkOrder(int id, Types t,int d, boolean P ) {//, Location l) {
+		this.ID=id;this.Type=t;this.plan=P;
+		//this.Location=l;
 		//this.Delay=0;
 		this.Status= simulation.Status.WAPPR;
 		if (d!=0) {//check for valid date
@@ -118,7 +119,9 @@ public class WorkOrder {
 	}
 	
 	protected void Clone(WorkOrder wo1) {//Clone a WO
-		this.ID=wo1.getID();this.Type=wo1.getTypes();this.Location=wo1.getLoation();this.plan=wo1.isPlan();
+		this.ID=wo1.getID();this.Type=wo1.getTypes();
+		//this.Location=wo1.getLoation();
+		this.plan=wo1.isPlan();
 		this.Status=wo1.getStatus();this.Report=wo1.getReport(); this.Last=wo1.getLast();
 		this.Notify2=wo1.getNotify2();this.Finish=wo1.getFinish();this.Test=wo1.getTest();
 		this.Shut=wo1.getShut();this.next=wo1.getNext();
@@ -129,7 +132,7 @@ public class WorkOrder {
 	
 	protected Types getTypes() {return this.Type;}
 	
-	protected Location getLoation() {return this.Location;}
+	//protected Location getLoation() {return this.Location;}
 	
 	protected Status getStatus() {return this.Status;}
 	
@@ -187,8 +190,8 @@ public class WorkOrder {
 		else {
 			shut = this.Shut.toString();
 		}
-		String S= ID+"," + Location.toString()+ ","+ Status.toString()+","+ report+ 
-				"," +Type.toString()+ ","+","+test+","+schedule+","+shut+","+finish+","+","+Last+","+Next+"\n";
+		String S= ID+"," + Status.toString()+","+ report+ 
+				"," +Type.toString()+ ","+","+test+","+schedule+","+shut+","+finish+","+","+Last+","+Next+"\n";//Location.toString()+ ","+ 
 		return S;
 	}
 }
