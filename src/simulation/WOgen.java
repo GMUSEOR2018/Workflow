@@ -64,7 +64,7 @@ public class WOgen {
 	//Generate the WO with respected distribution expression.
 	@SuppressWarnings("deprecation")
 	private int SHCIP() {
-		Date d = new Date(117,9,1);//Create a new date
+		Date d = new Date(117,7,1);//Create a new date
 		CIP += (int) Math.round(Distributions.Beta(0.193, 1.4)*66-0.5);
 		d.setDate(CIP);//Change Date.
 		if (d.getDay()==0) {CIP+=1;}//Skip the weekend.
@@ -73,7 +73,7 @@ public class WOgen {
 	}
 	@SuppressWarnings("deprecation")
 	private int SHDEV() {
-		Date d = new Date(117,9,1);
+		Date d = new Date(117,7,1);
 		DEV += (int) Math.round(Distributions.poisson(0.55));//0.52
 		//DEV += (int) Math.round(Distributions.exponential(1.23)-0.5);
 		d.setDate(DEV);
@@ -83,7 +83,7 @@ public class WOgen {
 	}
 	@SuppressWarnings("deprecation")
 	private int SHENG() {
-		Date d = new Date(117,9,1);
+		Date d = new Date(117,7,1);
 		ENG += (int) Math.round(Distributions.Beta(0.374,1.1)*55.5+0.999);
 		d.setDate(ENG);
 		if (d.getDay()==0) {ENG+=1;}
@@ -92,7 +92,7 @@ public class WOgen {
 	}
 	@SuppressWarnings("deprecation")
 	private int SHINV() {
-		Date d = new Date(117,9,1);
+		Date d = new Date(117,7,1);
 		INV += (int) Math.round(Distributions.exponential(1.325)-0.5);
 		d.setDate(INV);	
 		if (d.getDay()==0) {INV+=1;}
@@ -101,7 +101,7 @@ public class WOgen {
 	}
 	@SuppressWarnings("deprecation")
 	private int SHSR() {
-		Date d = new Date(117,9,1);	
+		Date d = new Date(117,7,1);	
 		SR += (int) Math.round(Distributions.poisson(0.37));
 		//SR += (int) Math.round(Distributions.exponential(0.987)-0.5);
 		d.setDate(SR);
@@ -111,7 +111,7 @@ public class WOgen {
 	}
 	@SuppressWarnings("deprecation")
 	private int SHMTR() {
-		Date d = new Date(117,9,1);	
+		Date d = new Date(117,7,1);	
 		MTR += (int) Math.round(Distributions.Beta(0.301, 5.08)*29-0.5);
 		d.setDate(MTR);
 		if (d.getDay()==0) {MTR+=1;}

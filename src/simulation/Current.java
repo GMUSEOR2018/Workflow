@@ -13,15 +13,15 @@ public class Current {
 	Foreman F= new Foreman(2,"Andre",E);
 	int crewNum=8,DayCrew=6,Evening=1,Night=1;//crew staffing
 	int[][] backLog = new int[7][];
-	
+
 	@SuppressWarnings("deprecation")
 	public void run(int duration) throws CloneNotSupportedException {
 		backLog = new int[7][duration];
 		WOgen g = new WOgen();
-		g.setUp();//generate WO for entire year
+		g.setUp(duration);//generate WO for entire year
 		this.wo=g.Output();
-		Date d = new Date(117,9,1);//Start date
-		Date end = new Date(117,9,1);//End date
+		Date d = new Date(117,7,1);//Start date
+		Date end = new Date(117,7,1);//End date
 		end.setDate(duration);
 		while(d.compareTo(end)<0) {
 			Day(d);
@@ -138,12 +138,28 @@ public class Current {
 		}
 		WO.clear();
 	}
-	
+
 	public  WorkOrder[] Output() {
-		return wo;
+		Date start = new Date(117,9,1);//Start date
+		List<WorkOrder> workorder =new ArrayList<WorkOrder>();
+		for(int d=0; d<wo.length;d++) {
+			if(wo[d].getReport().compareTo(start)>0) {
+				workorder.add(wo[d]);
+			}
+		}
+		WorkOrder[] workorders =workorder.toArray(new WorkOrder[workorder.size()]);
+		return workorders;
 	}
 
 	protected int[][] Delay(){
-		return backLog;
+		int c=0;
+		int[][] BL= new int[7][365];
+		for(int d=62; d<backLog[0].length;d++){
+			for(int x=0;x<7;x++){
+				BL[x][c]=backLog[x][d];
+			}
+			c++;
+		}
+		return BL;
 	} 
 }

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Run {
 	Boolean Demo =false ;//trigger of Demo mode.//false
 	int replication;//Number of replications.
-	int duration=365;// for setting date range
+	int duration=426;// for setting date range
 	double[][] avgDelay;
 	double[][] SDDelay;
 	String[] type ={"SHCIP","SHENG","SHDEV","SHSR","SHMTR","SHINV","Total"};
@@ -73,6 +73,8 @@ public class Run {
 		int[][] result=new int[7][];
 		String output;
 		Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};
+		System.out.println(WorkOrders[0].length);
+		
 		for(int h=0;h<WorkOrders.length;h++) {//replication
 			for(int i=0;i<WorkOrders[h].length;i++) {
 				for(int w=0;w<6;w++) {
@@ -98,9 +100,13 @@ public class Run {
 			Shut[6][h]=Shut[0][h]+Shut[1][h]+Shut[2][h]+Shut[3][h]+Shut[4][h]+Shut[5][h];
 			Test[6][h]=Test[0][h]+Test[1][h]+Test[2][h]+Test[3][h]+Test[4][h]+Test[5][h];
 			Unfinished[6][h]=WorkOrder[6][h]-Complete[6][h];
+			
+		
+			
 			for(int z=0; z<7;z++) {
 				result[z]=day(WorkOrders[h], Type[z],Complete[z][h]);
 			}
+			
 			for(int q=0;q<7;q++) {
 				avgDays[q][h]=S.mean(result[q]);
 				stdDays[q][h]=S.stv(result[q]);
@@ -208,11 +214,11 @@ public class Run {
 	protected void DailyReport() throws IOException {
 		int x=0;
 		String output;
-		int[][][] Daily=new int[duration][8][WorkOrders.length];
-		double[][][] Summary= new double[duration][8][4];
+		int[][][] Daily=new int[365][8][WorkOrders.length];
+		double[][][] Summary= new double[365][8][4];
 		Date d = new Date(117,9,1);//Start date
 		Date end = new Date(117,9,1);//End date
-		end.setDate(duration);
+		end.setDate(365);
 		while(d.compareTo(end)<0) {
 			for(int l=0;l<WorkOrders.length;l++) {//Replication			
 				for(int u=0;u<WorkOrders[l].length;u++) {	

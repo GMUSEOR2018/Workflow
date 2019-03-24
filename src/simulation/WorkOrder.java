@@ -8,7 +8,7 @@ public class WorkOrder {
 	//private Location Location;
 	private boolean plan;
 	private Date Report, Assesment, Notify1, Notify2,Finish, Test, Shut, Last, next;
-	Date ASSIGN = new Date(117,9,1);
+	Date ASSIGN = new Date(117,7,1);
 	//Constructor
 	@SuppressWarnings("deprecation")
 	public WorkOrder(int id, Types t,int d, boolean P ) {//, Location l) {
@@ -22,8 +22,8 @@ public class WorkOrder {
 		this.Report=(Date) ASSIGN.clone(); 
 		this.Last=(Date) this.ASSIGN.clone();
 		this.next=(Date) this.ASSIGN.clone();
-		this.Notify2= new Date(117,8,1);this.Assesment=new Date(117,8,1);this.Notify1=new Date(117,8,1);
-		this.Finish=new Date(117,8,1);this.Test=new Date(117,8,1);;this.Shut=new Date(117,8,1);;
+		this.Notify2= new Date(117,6,1);this.Assesment=new Date(117,6,1);this.Notify1=new Date(117,6,1);
+		this.Finish=new Date(117,6,1);this.Test=new Date(117,6,1);;this.Shut=new Date(117,6,1);;
 	}
 
 	protected void setPlan(int d) {
