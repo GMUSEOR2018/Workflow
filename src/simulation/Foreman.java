@@ -33,6 +33,7 @@ public class Foreman extends Employee {
 			double time=0,t;
 			time =Distributions.Triangular(0.667, 1, 1.5)+Distributions.Triangular(0.5, 0.75, 1)
 			+Distributions.Triangular(0.0833, 0.333, 1);//Time waiting for assignment + break time+ travel time 
+//			time = 0.33 + Distributions.Triangular(0.5, 0.75, 1) + Distributions.Triangular(0.0833, 0.333, 1);//Experiment 2 
 			while(time<=8 & i<Wo.length) {
 				temp=Wo[i];
 				temp.Clone(Wo[i]);
