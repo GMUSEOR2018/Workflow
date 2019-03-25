@@ -53,7 +53,7 @@ public class Current {
 				}	
 			}
 			x +=1;
-			d=  new Date(117,9,1);
+			d=  new Date(117,7,1);
 			d.setDate(x);
 		}
 	}

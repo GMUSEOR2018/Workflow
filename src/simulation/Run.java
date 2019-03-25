@@ -72,9 +72,7 @@ public class Run {
 		medianDays= new double[7][replication];	
 		int[][] result=new int[7][];
 		String output;
-		Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};
-		System.out.println(WorkOrders[0].length);
-		
+		Types[] Type= {Types.SHCIP,Types.SHENG,Types.SHDEV,Types.SHSR,Types.SHMTR,Types.SHINV,null};		
 		for(int h=0;h<WorkOrders.length;h++) {//replication
 			for(int i=0;i<WorkOrders[h].length;i++) {
 				for(int w=0;w<6;w++) {
@@ -127,19 +125,19 @@ public class Run {
 	}
 
 	protected String ToSring() {
-		String output=" Type\t"+"input-avg\t"+"input-SD\t"+"Completed-AVG\t"+"Completed-SD\n";
+		String output="Type\t"+"input-avg\t"+"input-SD\t"+"Completed-AVG\t"+"Completed-SD\n";
 		for(int h=0; h<7;h++) {
-			output+=type[h]+ "\t  "+String.format( "%.2f",S.mean(WorkOrder[h]))+ "      " + String.format( "%.2f",S.stv(WorkOrder[h]))+"\t\t"+ String.format( "%.2f",S.mean(Complete[h]))+"\t\t"+ String.format( "%.2f",S.stv(Complete[h]))+"\n";
+			output+=type[h]+ "\t"+String.format( "%.2f",S.mean(WorkOrder[h]))+ "\t" + String.format( "%.2f",S.stv(WorkOrder[h]))+"\t"+ String.format( "%.2f",S.mean(Complete[h]))+"\t"+ String.format( "%.2f",S.stv(Complete[h]))+"\n";
 		}
-		output+="\n Type\t"+"Unfinished-avg\t"+"Unfinished-SD\t"+"Shut-off-AVG\t" +"Shut-off-SD\t" +"Tested-AVG\t"+"Tested-SD\n";
+		output+="\nType\t"+"Unfinished-avg\t"+"Unfinished-SD\t"+"Shut-off-AVG\t" +"Shut-off-SD\t" +"Tested-AVG\t"+"Tested-SD\n";
 		for(int h=0; h<7;h++) {
-			output+=type[h]+  "\t"+String.format( "%.2f",S.mean(Unfinished[h]))+"\t\t" + String.format( "%.2f",S.stv(Unfinished[h]))+"\t\t" + 
-					String.format( "%.2f",S.mean(Shut[h]))+"\t\t" + String.format( "%.2f",S.stv(Shut[h]))+"\t\t" +String.format( "%.2f",S.mean(Test[h]))+"\t\t" + String.format( "%.2f",S.stv(Test[h]))+"\n";
+			output+=type[h]+  "\t"+String.format( "%.2f",S.mean(Unfinished[h]))+"\t" + String.format( "%.2f",S.stv(Unfinished[h]))+"\t" + 
+					String.format( "%.2f",S.mean(Shut[h]))+"\t" + String.format( "%.2f",S.stv(Shut[h]))+"\t" +String.format( "%.2f",S.mean(Test[h]))+"\t" + String.format( "%.2f",S.stv(Test[h]))+"\n";
 		}
-		output +="\n Type "+" duration-AVG "+" Duration-SD "+" median-duraion "+" minium-duraion "+" maximun-duration\n";
+		output +="\nType "+" duration-AVG "+" Duration-SD "+" median-duraion "+" minium-duraion "+" maximun-duration\n";
 		for(int h=0; h<7;h++) {
-			output+=type[h]+ "\t"+ String.format( "%.2f",S.mean(avgDays[h])) + "\t\t" +String.format( "%.2f",S.mean(stdDays[h]))+ "\t\t" +String.format( "%.2f",S.mean(medianDays[h]))+ 
-					"\t\t" +S.min(minDays[h])+ "\t\t" +S.max(maxDays[h])+"\n";//Check STD
+			output+=type[h]+ "\t"+ String.format( "%.2f",S.mean(avgDays[h])) + "\t" +String.format( "%.2f",S.mean(stdDays[h]))+ "\t" +String.format( "%.2f",S.mean(medianDays[h]))+ 
+					"\t" +S.min(minDays[h])+ "\t" +S.max(maxDays[h])+"\n";//Check STD
 		}
 		return output;
 	}
