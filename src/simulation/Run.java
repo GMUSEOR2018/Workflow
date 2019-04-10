@@ -38,14 +38,14 @@ public class Run {
 		WorkOrders= new WorkOrder[replication][];
 		backlogs = new int [replication][7][];
 		if(Demo) {		
-			Current c= new Current();
+			Baseline c= new Baseline();
 			c.run(duration);
 			WorkOrders[0]=c.Output();
 			backlogs[0]=c.Delay();
 		}
 		else {
 			for(int y = 0; y<replication;y++) {
-				Current c= new Current();
+				Baseline c= new Baseline();
 				c.run(duration);
 				WorkOrders[y]=c.Output();
 				backlogs[y]=c.Delay();
