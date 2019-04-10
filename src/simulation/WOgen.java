@@ -18,37 +18,36 @@ public class WOgen {
 
 		while(SHCIP<=Range || SHENG<=Range || SHINV<=Range || SHDEV<=Range || SHSR<=Range || SHMTR<=Range) {
 			if(SHCIP<=SHENG & SHCIP<=SHINV & SHCIP<=SHDEV & SHCIP<=SHSR & SHCIP<=SHMTR & SHCIP<=Range) {
-				WO.add(new WorkOrder(x,Types.SHCIP,SHCIP, false));//,Location.NE
+				WO.add(new WorkOrder(x,Types.SHCIP,SHCIP, false));
 				x++;
 				SHCIP=SHCIP();
 				NumCIP++;
 			}
 			if(SHENG<=SHCIP & SHENG<=SHINV & SHENG<=SHDEV & SHENG<=SHSR & SHENG<=SHMTR & SHENG<=Range) {
-				WO.add(new WorkOrder(x,Types.SHENG,SHENG, false));//,Location.NE
+				WO.add(new WorkOrder(x,Types.SHENG,SHENG, false));
 				x++;
 				SHENG=SHENG();
 				NumENG++;
 			}
 			if(SHINV<=SHCIP & SHENG>=SHINV & SHINV<=SHDEV & SHINV<=SHSR & SHINV<=SHMTR & SHINV<=Range) {
-				WO.add(new WorkOrder(x,Types.SHINV,SHINV, false));//,Location.NE
+				WO.add(new WorkOrder(x,Types.SHINV,SHINV, false));
 				x++;
 				SHINV=SHINV();
 				NumINV++;
 			}
 			if(SHDEV<=SHCIP & SHDEV<=SHINV & SHENG>=SHDEV & SHDEV<=SHSR & SHDEV<=SHMTR & SHDEV<=Range) {
-				WO.add(new WorkOrder(x,Types.SHDEV,SHDEV, false));//,Location.NE
+				WO.add(new WorkOrder(x,Types.SHDEV,SHDEV, false));
 				x++;
 				SHDEV=SHDEV();
 				NumDEV++;
 			}
 			if(SHSR<=SHCIP & SHSR<=SHINV & SHSR<=SHDEV & SHSR<=SHDEV & SHSR<=SHMTR & SHSR<=Range) {
-				WO.add(new WorkOrder(x,Types.SHSR,SHSR, false));//,Location.NE
-				x++;
+				WO.add(new WorkOrder(x,Types.SHSR,SHSR, false));
 				SHSR=SHSR();
 				NumSR++;
 			}
 			if(SHMTR<=SHCIP & SHMTR<=SHINV & SHMTR<=SHDEV & SHMTR<=SHSR & SHSR>=SHMTR & SHMTR<=Range) {
-				WO.add(new WorkOrder(x,Types.SHMTR,SHMTR, false));//,Location.NE
+				WO.add(new WorkOrder(x,Types.SHMTR,SHMTR, false));
 				x++;
 				SHMTR=SHMTR();
 				NumMTR++;

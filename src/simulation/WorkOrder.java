@@ -5,7 +5,6 @@ public class WorkOrder {
 	private int ID, Delay;
 	private Types Type;
 	private Status Status;
-	//private Location Location;
 	private boolean plan;
 	private Date Report, Assesment, Notify1, Notify2,Finish, Test, Shut, Last, next;
 	Date ASSIGN = new Date(117,7,1);
